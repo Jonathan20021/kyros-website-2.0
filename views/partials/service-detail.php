@@ -21,8 +21,8 @@
         <div class="grid lg:grid-cols-12 gap-12 items-end">
             <div class="lg:col-span-8">
                 <div class="glow-tag mb-7 reveal"><?= e($service['eyebrow']) ?></div>
-                <h1 class="font-display font-normal tracking-tightest leading-[0.88] text-balance
-                           text-[clamp(2.5rem,7vw,6.5rem)] reveal">
+                <h1 class="font-display font-normal tracking-tightest leading-[0.95] text-balance
+                           text-[clamp(2.25rem,5.5vw,5rem)] reveal">
                     <?= $service['title'] ?>
                 </h1>
                 <p class="text-chalk/65 text-[17px] leading-relaxed max-w-2xl mt-8 reveal" style="transition-delay:160ms"><?= e($service['intro']) ?></p>

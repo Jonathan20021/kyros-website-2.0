@@ -23,12 +23,10 @@
 
         <div class="grid lg:grid-cols-12 gap-12 items-end">
             <div class="lg:col-span-9">
-                <h1 class="font-display font-normal tracking-tightest leading-[0.88] text-balance
-                           text-[clamp(2.75rem,7.5vw,7rem)] reveal">
-                    <span class="block text-grad-cream">
-                        Una plataforma <span class="text-italic-serif text-grad-indigo">end-to-end</span>
-                    </span>
-                    <span class="text-grad-cream block">para tu tecnología.</span>
+                <h1 class="font-display font-normal tracking-tightest leading-[0.95] text-balance
+                           text-[clamp(2.5rem,6.5vw,5.5rem)] reveal">
+                    <span class="block text-grad-cream">Una plataforma <span class="text-italic-serif text-grad-indigo">end-to-end</span></span>
+                    <span class="block text-grad-cream">para tu tecnología.</span>
                 </h1>
             </div>
             <div class="lg:col-span-3 reveal" style="transition-delay:180ms">

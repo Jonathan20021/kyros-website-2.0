@@ -13,12 +13,12 @@
         <div class="max-w-3xl mx-auto text-center">
             <div class="glow-tag mb-8 mx-auto"><span class="text-chalk">Error <?= e((string)($code ?? 404)) ?></span></div>
 
-            <div class="big-num text-grad-indigo text-[clamp(8rem,22vw,18rem)] leading-none mb-8 reveal">
+            <div class="big-num text-grad-indigo text-[clamp(6rem,18vw,14rem)] leading-none mb-6 reveal">
                 <?= e((string)($code ?? 404)) ?>
             </div>
 
-            <h1 class="font-display font-normal tracking-tightest text-[clamp(2rem,5vw,4.25rem)] leading-[0.93] mb-6 text-balance">
-                <?= e($message ?? 'Página no encontrada') ?><span class="text-italic-serif text-grad-indigo">.</span>
+            <h1 class="font-display font-normal tracking-tightest text-[clamp(1.85rem,4vw,3.5rem)] leading-[0.98] mb-5 text-balance">
+                <?= e($message ?? 'Página no encontrada') ?>.
             </h1>
             <p class="text-chalk/60 mb-12 max-w-md mx-auto text-[16px] leading-relaxed">
                 La página que buscas no existe o fue movida. Pero podemos ayudarte a encontrar lo que necesitas.

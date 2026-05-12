@@ -25,13 +25,10 @@
 
         <div class="grid lg:grid-cols-12 gap-12 items-end">
             <div class="lg:col-span-9">
-                <h1 class="font-display font-normal tracking-tightest leading-[0.88] text-balance
-                           text-[clamp(3rem,8vw,8rem)] reveal">
+                <h1 class="font-display font-normal tracking-tightest leading-[0.95] text-balance
+                           text-[clamp(2.5rem,6.5vw,5.5rem)] reveal">
                     <span class="block text-grad-cream">Tecnología que</span>
-                    <span class="block">
-                        <span class="text-italic-serif text-grad-indigo">transforma</span>
-                        <span class="text-grad-soft">empresas.</span>
-                    </span>
+                    <span class="block text-grad-cream"><span class="text-italic-serif text-grad-indigo">transforma</span> empresas.</span>
                 </h1>
             </div>
             <div class="lg:col-span-3 reveal" style="transition-delay:180ms">

@@ -18,47 +18,23 @@
 <!-- ════════════════════════════════════════════════════════
      HERO — Cinematic + Live Dashboard
      ════════════════════════════════════════════════════════ -->
-<section id="hero" class="relative pt-20 lg:pt-28 pb-24 lg:pb-32 overflow-hidden" data-spotlight-section>
+<section id="hero" class="relative pt-16 lg:pt-24 pb-20 lg:pb-28 overflow-hidden" data-spotlight-section>
     <div class="absolute inset-0 grid-mask"></div>
-    <div class="mesh-bg" data-parallax="-0.06" style="opacity:0.65"></div>
 
-    <!-- Liquid orbs -->
-    <div class="liquid-orb liquid-orb--indigo" style="width: 640px; height: 640px; top: -220px; left: -160px;"></div>
-    <div class="liquid-orb liquid-orb--cyan"   style="width: 420px; height: 420px; top: 12%; right: -80px;"></div>
-    <div class="liquid-orb liquid-orb--violet" style="width: 360px; height: 360px; bottom: -120px; left: 30%;"></div>
-
-    <!-- Decorative beams -->
-    <div class="absolute top-0 left-[8%] beam"></div>
-    <div class="absolute top-24 left-[22%] beam" style="animation-delay: 1s;"></div>
-    <div class="absolute top-12 right-[18%] beam" style="animation-delay: 2s;"></div>
-    <div class="absolute top-44 right-[6%] beam" style="animation-delay: 1.5s;"></div>
-
-    <!-- Architectural SVG -->
-    <svg class="arch-deco hidden md:block" style="top: 80px; right: 4%; width: 320px; height: 320px;" viewBox="0 0 320 320" fill="none">
-        <circle cx="160" cy="160" r="158" stroke="rgba(91,94,255,0.15)"/>
-        <circle cx="160" cy="160" r="120" stroke="rgba(91,94,255,0.18)" stroke-dasharray="4 8"/>
-        <circle cx="160" cy="160" r="80" stroke="rgba(34,211,238,0.22)" stroke-dasharray="2 6"/>
-        <circle cx="160" cy="160" r="40" stroke="rgba(167,139,250,0.30)"/>
-        <line x1="160" y1="0" x2="160" y2="320"/>
-        <line x1="0" y1="160" x2="320" y2="160"/>
-        <circle cx="160" cy="40" r="4"/>
-        <circle cx="280" cy="160" r="3"/>
-        <circle cx="160" cy="280" r="3"/>
-        <circle cx="40" cy="160" r="3"/>
-    </svg>
+    <!-- Liquid orbs (toned down) -->
+    <div class="liquid-orb liquid-orb--indigo" style="width: 560px; height: 560px; top: -200px; left: -160px;"></div>
+    <div class="liquid-orb liquid-orb--cyan"   style="width: 360px; height: 360px; top: 10%; right: -80px;"></div>
 
     <div class="container relative z-10" data-hero>
 
         <!-- Top status -->
-        <div class="flex flex-wrap items-center justify-between gap-4 mb-14 reveal">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-10 lg:mb-14 reveal">
             <div class="glow-tag">
-                <span class="text-chalk">Disponible · Q2 2026</span>
+                <span class="text-emerald-300">Disponible · Q2 2026</span>
             </div>
-            <div class="hidden md:flex items-center gap-4 text-[12px] font-mono tracking-tight text-chalk-quiet">
-                <span>v.2026.05</span>
-                <span class="w-1 h-1 rounded-full bg-chalk-quiet/50"></span>
+            <div class="hidden md:flex items-center gap-3 text-[11.5px] font-mono tracking-tight text-chalk-quiet">
                 <span>Santo Domingo · RD</span>
-                <span class="w-1 h-1 rounded-full bg-chalk-quiet/50"></span>
+                <span class="w-1 h-1 rounded-full bg-chalk-quiet/40"></span>
                 <span id="live-clock">--:--</span>
             </div>
         </div>
@@ -67,29 +43,24 @@
         <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             <!-- Headline column -->
             <div class="lg:col-span-7">
-                <h1 class="font-display font-normal tracking-tightest text-balance leading-[0.88]
-                           text-[clamp(2.75rem,9vw,7.5rem)] reveal">
-                    <span class="block text-grad-cream">Tecnología.</span>
-                    <span class="block text-italic-serif text-grad-indigo">Que se comporta</span>
-                    <span class="block text-grad-soft">como debería.</span>
+                <h1 class="font-display font-normal tracking-tightest text-balance leading-[0.92]
+                           text-[clamp(2.5rem,7.5vw,6rem)] reveal">
+                    <span class="block text-grad-cream">Tecnología que</span>
+                    <span class="block text-grad-cream">funciona como <span class="text-italic-serif text-grad-indigo">debe</span>.</span>
                 </h1>
 
-                <p class="text-chalk/65 text-[17px] leading-[1.6] max-w-xl mt-8 reveal" style="transition-delay:140ms">
-                    Software, ciberseguridad, infraestructura y soporte IT para empresas que no pueden permitirse fallar. Construido por un equipo senior, operado bajo SLA, garantizado por contrato.
+                <p class="text-chalk/65 text-[16px] md:text-[17px] leading-[1.6] max-w-xl mt-7 reveal" style="transition-delay:140ms">
+                    Software, ciberseguridad, infraestructura y soporte para empresas que no pueden permitirse fallar. Equipo senior, operación bajo SLA, garantía contractual.
                 </p>
 
-                <div class="flex flex-wrap items-center gap-3 mt-10 reveal" style="transition-delay:260ms">
-                    <a href="<?= url('/contact') ?>" class="btn-ember sheen magnetic text-[14px] py-3.5 px-6">
+                <div class="flex flex-wrap items-center gap-2.5 mt-8 reveal" style="transition-delay:260ms">
+                    <a href="<?= url('/contact') ?>" class="btn-ember sheen magnetic text-[13.5px] py-3 px-5">
                         Iniciar proyecto
                         <svg class="w-3.5 h-3.5 arrow-ic" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-5-5l5 5-5 5"/></svg>
                     </a>
-                    <a href="<?= url('/services') ?>" class="btn-outline sheen text-[14px]">
+                    <a href="<?= url('/services') ?>" class="btn-outline text-[13.5px]">
                         Ver servicios
                     </a>
-                    <div class="flex items-center gap-2 text-[12px] font-mono text-chalk-quiet ml-2">
-                        <span class="dash-dot"></span>
-                        <span>Respuesta &lt; 24h</span>
-                    </div>
                 </div>
             </div>
 
@@ -98,16 +69,16 @@
                 <div class="tilt-target dash-card" style="padding: 0;">
 
                     <!-- Window chrome -->
-                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-white/5">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-red-400/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-yellow-400/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-green-400/60"></span>
-                        </div>
-                        <div class="font-mono text-[10.5px] text-chalk-quiet tracking-tight">kyros.live · operations</div>
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-white/5">
                         <div class="flex items-center gap-1.5">
-                            <span class="dash-dot"></span>
-                            <span class="font-mono text-[10px] text-chalk/60">LIVE</span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-white/15"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-white/15"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-white/15"></span>
+                        </div>
+                        <div class="font-mono text-[10px] text-chalk-quiet tracking-tight">kyros · live ops</div>
+                        <div class="flex items-center gap-1.5 pl-3 pr-1 py-0.5 rounded-full" style="background: rgba(52,211,153,0.10); border: 1px solid rgba(52,211,153,0.20);">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400" style="box-shadow:0 0 8px #34d399"></span>
+                            <span class="font-mono text-[9.5px] text-emerald-300 tracking-[0.12em]">LIVE</span>
                         </div>
                     </div>
 
@@ -185,17 +156,28 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════
-     MEGA MARQUEE
+     BANNER LINE — concise tagline strip
      ════════════════════════════════════════════════════════ -->
-<section class="relative py-10 lg:py-14 overflow-hidden border-y border-white/5">
-    <div class="mask-fade-x overflow-hidden">
-        <div class="flex gap-10 animate-marquee w-max font-display font-normal mega-marquee" style="color: rgba(255,255,255,0.06);">
-            <?php for ($i=0; $i < 2; $i++): ?>
-                <span>Build</span><span class="text-italic-serif text-grad-indigo">·</span>
-                <span>Secure</span><span class="text-italic-serif text-grad-indigo">·</span>
-                <span>Scale</span><span class="text-italic-serif text-grad-indigo">·</span>
-                <span class="text-italic-serif" style="color: rgba(255,255,255,0.10)">Operate</span><span class="text-italic-serif text-grad-indigo">·</span>
-            <?php endfor; ?>
+<section class="relative py-6 md:py-8 overflow-hidden border-y border-white/5">
+    <div class="container">
+        <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-center">
+            <?php
+            $taglines = [
+                ['code',     'Build'],
+                ['shield',   'Secure'],
+                ['trending', 'Scale'],
+                ['headset',  'Operate'],
+            ];
+            foreach ($taglines as $i => [$ic, $txt]):
+            ?>
+                <span class="inline-flex items-center gap-2.5 text-chalk/60">
+                    <span class="text-indigo-300"><?= icon($ic, 'w-4 h-4') ?></span>
+                    <span class="font-display text-[15px] tracking-tight"><?= e($txt) ?></span>
+                </span>
+                <?php if ($i < count($taglines) - 1): ?>
+                    <span class="text-chalk/15 hidden sm:inline">·</span>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -240,8 +222,8 @@
         <div class="grid lg:grid-cols-12 gap-10 mb-16 items-end">
             <div class="lg:col-span-7">
                 <span class="eyebrow reveal"><span class="eyebrow-num">[01]</span>Servicios</span>
-                <h2 class="font-display font-normal tracking-tightest leading-[0.92] text-balance
-                           text-[clamp(2.5rem,6vw,5.5rem)] mt-7 reveal">
+                <h2 class="font-display font-normal tracking-tightest leading-[0.98] text-balance
+                           text-[clamp(2rem,4.5vw,3.75rem)] mt-6 reveal">
                     Cuatro disciplinas, <span class="text-italic-serif text-grad-indigo">un equipo</span>.
                 </h2>
             </div>
@@ -256,12 +238,12 @@
         <div class="grid lg:grid-cols-12 gap-5">
             <!-- Featured: Software (largest) -->
             <a href="<?= url('/services/software-development') ?>" class="lg:col-span-8 lg:row-span-2 tilt reveal group">
-                <div class="tilt-target conic-border h-full overflow-hidden spotlight" style="padding: 1.75rem; min-height: 480px;">
+                <div class="tilt-target card spotlight h-full overflow-hidden" style="min-height: 440px;">
                     <div class="absolute inset-0 opacity-30"
                          style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 40px 40px;
                                 -webkit-mask-image: radial-gradient(60% 60% at 100% 0%, #000, transparent 70%); mask-image: radial-gradient(60% 60% at 100% 0%, #000, transparent 70%);"></div>
-                    <div class="absolute -top-32 -right-20 w-[32rem] h-[32rem] rounded-full pointer-events-none"
-                         style="background: radial-gradient(circle, rgba(91,94,255,0.40), transparent 65%); filter: blur(80px);"></div>
+                    <div class="absolute -top-32 -right-20 w-[26rem] h-[26rem] rounded-full pointer-events-none"
+                         style="background: radial-gradient(circle, rgba(99,102,241,0.22), transparent 65%); filter: blur(90px);"></div>
 
                     <div class="relative h-full flex flex-col p-2 tilt-up">
                         <div class="flex items-start justify-between mb-10">
@@ -272,10 +254,8 @@
                             </div>
                         </div>
 
-                        <h3 class="font-display font-normal tracking-tightest text-[clamp(2rem,4.2vw,4rem)] leading-[0.95] mb-6 text-balance">
-                            Desarrollo<br>
-                            <span class="text-italic-serif text-chalk/55">de software</span>
-                            <span class="text-grad-indigo">a medida</span>
+                        <h3 class="font-display font-normal tracking-tightest text-[clamp(1.75rem,3.5vw,3rem)] leading-[1.02] mb-5 text-balance">
+                            Desarrollo de software <span class="text-italic-serif text-grad-indigo">a medida</span>
                         </h3>
 
                         <p class="text-chalk/60 leading-relaxed max-w-lg mb-10 text-[15.5px]">
@@ -318,7 +298,7 @@
                             <div class="icon-chip icon-chip-cyan"><?= icon('shield', 'w-6 h-6') ?></div>
                             <span class="font-mono text-[10.5px] tracking-tight text-chalk-quiet">[02]</span>
                         </div>
-                        <h3 class="font-display text-[24px] tracking-tightest font-normal mb-2.5 leading-tight">Ciberseguridad <span class="text-italic-serif text-grad-indigo">avanzada</span></h3>
+                        <h3 class="font-display text-[22px] tracking-tighter font-normal mb-2.5 leading-tight">Ciberseguridad avanzada</h3>
                         <p class="text-chalk/55 text-[13.5px] leading-relaxed mb-5 flex-grow">
                             Pentesting, hardening, monitoreo y respuesta ante incidentes.
                         </p>
@@ -346,7 +326,7 @@
                             <div class="icon-chip icon-chip-violet"><?= icon('headset', 'w-6 h-6') ?></div>
                             <span class="font-mono text-[10.5px] tracking-tight text-chalk-quiet">[03]</span>
                         </div>
-                        <h3 class="font-display text-[24px] tracking-tightest font-normal mb-2.5 leading-tight">Soporte <span class="text-italic-serif text-grad-indigo">24/7</span></h3>
+                        <h3 class="font-display text-[22px] tracking-tighter font-normal mb-2.5 leading-tight">Soporte 24/7</h3>
                         <p class="text-chalk/55 text-[13.5px] leading-relaxed mb-5 flex-grow">
                             Mesa de ayuda con SLA. Resolvemos en minutos, no en días.
                         </p>
@@ -374,7 +354,7 @@
                         <div class="md:col-span-7">
                             <div class="flex items-center gap-3 mb-2">
                                 <span class="font-mono text-[10.5px] tracking-tight text-chalk-quiet">[04]</span>
-                                <h3 class="font-display text-[26px] tracking-tightest font-normal leading-tight">Infraestructura <span class="text-italic-serif text-grad-indigo">de redes</span></h3>
+                                <h3 class="font-display text-[24px] tracking-tighter font-normal leading-tight">Infraestructura de redes</h3>
                             </div>
                             <p class="text-chalk/55 text-[14px] leading-relaxed">
                                 Diseño, implementación y administración de redes empresariales: cableado certificado, WiFi 6, firewalls y VPN.
@@ -406,7 +386,7 @@
         <div class="grid md:grid-cols-12 gap-10 items-end mb-14">
             <div class="md:col-span-6">
                 <span class="eyebrow reveal"><span class="eyebrow-num">[02]</span>Por los números</span>
-                <h2 class="font-display font-normal tracking-tightest text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.93] mt-7 reveal text-balance">
+                <h2 class="font-display font-normal tracking-tightest text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.98] mt-6 reveal text-balance">
                     Resultados que se <span class="text-italic-serif text-grad-indigo">miden</span>.
                 </h2>
             </div>
@@ -448,14 +428,13 @@
      INTERACTIVE ESTIMATOR
      ════════════════════════════════════════════════════════ -->
 <section id="estimator" class="section relative overflow-hidden" data-spotlight-section>
-    <div class="liquid-orb liquid-orb--indigo" style="width: 540px; height: 540px; top: -160px; left: -80px;"></div>
-    <div class="liquid-orb liquid-orb--cyan" style="width: 420px; height: 420px; bottom: -140px; right: -60px; opacity: 0.4;"></div>
+    <div class="liquid-orb liquid-orb--indigo" style="width: 460px; height: 460px; top: -120px; left: -80px;"></div>
 
     <div class="container relative z-10">
         <div class="grid lg:grid-cols-12 gap-10 mb-14 items-end">
             <div class="lg:col-span-7">
                 <span class="eyebrow reveal"><span class="eyebrow-num">[03]</span>Estimador interactivo</span>
-                <h2 class="font-display font-normal tracking-tightest text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.93] mt-7 reveal text-balance">
+                <h2 class="font-display font-normal tracking-tightest text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.98] mt-6 reveal text-balance">
                     Calcula tu proyecto <span class="text-italic-serif text-grad-indigo">en segundos</span>.
                 </h2>
             </div>
@@ -614,7 +593,7 @@
         <div class="grid md:grid-cols-12 gap-10 mb-16 items-end">
             <div class="md:col-span-7">
                 <span class="eyebrow reveal"><span class="eyebrow-num">[03]</span>Por qué KYROS</span>
-                <h2 class="font-display font-normal tracking-tightest text-[clamp(2.5rem,5.5vw,5rem)] leading-[0.92] mt-7 reveal text-balance">
+                <h2 class="font-display font-normal tracking-tightest text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.98] mt-6 reveal text-balance">
                     No vendemos horas. <span class="text-italic-serif text-grad-indigo">Entregamos</span> resultados.
                 </h2>
             </div>
@@ -626,9 +605,9 @@
         </div>
 
         <div class="grid lg:grid-cols-12 gap-5">
-            <div class="lg:col-span-7 reveal tilt" style="min-height: 440px;">
-                <div class="tilt-target conic-border h-full spotlight overflow-hidden" style="padding: 1.75rem;">
-                    <div class="absolute top-0 right-0 w-[28rem] h-[28rem] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(91,94,255,0.40), transparent 65%); filter: blur(80px);"></div>
+            <div class="lg:col-span-7 reveal tilt" style="min-height: 420px;">
+                <div class="tilt-target card h-full spotlight overflow-hidden">
+                    <div class="absolute top-0 right-0 w-[22rem] h-[22rem] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(99,102,241,0.18), transparent 65%); filter: blur(90px);"></div>
                     <div class="relative h-full flex flex-col tilt-up p-2">
                         <div class="flex items-center gap-3 mb-7">
                             <div class="icon-chip"><?= icon('rocket', 'w-6 h-6') ?></div>
@@ -689,7 +668,7 @@
             <div class="lg:col-span-4">
                 <div class="lg:sticky lg:top-28">
                     <span class="eyebrow reveal"><span class="eyebrow-num">[04]</span>Proceso</span>
-                    <h2 class="font-display font-normal tracking-tightest text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[0.93] mt-7 mb-7 reveal text-balance">
+                    <h2 class="font-display font-normal tracking-tightest text-[clamp(2rem,4vw,3.25rem)] leading-[0.98] mt-6 mb-6 reveal text-balance">
                         De la idea al <span class="text-italic-serif text-grad-indigo">despliegue</span>.
                     </h2>
                     <p class="text-chalk/55 text-[15px] leading-relaxed reveal">
@@ -756,7 +735,7 @@
         <div class="grid lg:grid-cols-12 gap-10 items-end">
             <div class="lg:col-span-7">
                 <span class="eyebrow reveal"><span class="eyebrow-num">[05]</span>Trabajos recientes</span>
-                <h2 class="font-display font-normal tracking-tightest text-[clamp(2.25rem,5vw,4.25rem)] leading-[0.93] mt-7 reveal text-balance">
+                <h2 class="font-display font-normal tracking-tightest text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.98] mt-6 reveal text-balance">
                     Proyectos que <span class="text-italic-serif text-grad-indigo">mueven</span> negocios.
                 </h2>
             </div>
@@ -829,7 +808,7 @@
         <div class="grid lg:grid-cols-12 gap-10 items-end mb-10">
             <div class="lg:col-span-7">
                 <span class="eyebrow reveal"><span class="eyebrow-num">[06]</span>Stack</span>
-                <h2 class="font-display font-normal tracking-tightest text-[clamp(2rem,4vw,3.25rem)] leading-tight mt-7 reveal text-balance">
+                <h2 class="font-display font-normal tracking-tightest text-[clamp(1.85rem,3.8vw,3rem)] leading-[0.98] mt-6 reveal text-balance">
                     Las mejores herramientas, <span class="text-italic-serif text-grad-indigo">para cada trabajo</span>.
                 </h2>
             </div>
@@ -874,7 +853,7 @@
         <div class="grid md:grid-cols-12 gap-10 mb-16 items-end">
             <div class="md:col-span-7">
                 <span class="eyebrow reveal"><span class="eyebrow-num">[07]</span>Voces</span>
-                <h2 class="font-display font-normal tracking-tightest text-[clamp(2.25rem,5vw,4.25rem)] leading-[0.93] mt-7 reveal text-balance">
+                <h2 class="font-display font-normal tracking-tightest text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.98] mt-6 reveal text-balance">
                     Lo que dicen <span class="text-italic-serif text-grad-indigo">nuestros clientes</span>.
                 </h2>
             </div>
@@ -899,17 +878,19 @@
             ];
             foreach ($testimonials as $i => [$quote, $name, $role, $company, $initial, $avatarCls, $span, $big]):
             ?>
-                <figure class="<?= e($span) ?> tilt reveal" style="transition-delay: <?= $i*80 ?>ms;">
-                    <div class="tilt-target card spotlight flex flex-col h-full" style="padding: 2rem;">
-                        <span class="text-italic-serif text-grad-indigo leading-none mb-5 tilt-up" style="font-size: 96px;">"</span>
-                        <blockquote class="text-chalk/85 leading-relaxed flex-grow tracking-tight <?= $big ? 'text-[20px] md:text-[22px]' : 'text-[15.5px]' ?>">
-                            <?= e($quote) ?>
+                <figure class="<?= e($span) ?> tilt reveal" style="transition-delay: <?= $i*60 ?>ms;">
+                    <div class="tilt-target card spotlight flex flex-col h-full">
+                        <div class="flex gap-1 mb-5 text-amber-300/90">
+                            <?= str_repeat(icon('star', 'w-3.5 h-3.5 fill-current'), 5) ?>
+                        </div>
+                        <blockquote class="text-chalk/85 leading-relaxed flex-grow tracking-tight <?= $big ? 'text-[17px] md:text-[19px]' : 'text-[14.5px]' ?>">
+                            "<?= e($quote) ?>"
                         </blockquote>
-                        <figcaption class="mt-8 pt-6 border-t border-white/8 flex items-center gap-3">
-                            <div class="avatar <?= e($avatarCls) ?> w-11 h-11 text-[14px]"><?= e($initial) ?></div>
-                            <div>
-                                <div class="font-display text-[14.5px] font-normal text-chalk tracking-tight"><?= e($name) ?></div>
-                                <div class="text-[12px] text-chalk/45 mt-0.5"><?= e($role) ?> · <?= e($company) ?></div>
+                        <figcaption class="mt-7 pt-5 border-t border-white/5 flex items-center gap-3">
+                            <div class="avatar <?= e($avatarCls) ?> w-10 h-10 text-[13px]"><?= e($initial) ?></div>
+                            <div class="min-w-0">
+                                <div class="font-display text-[14px] font-medium text-chalk tracking-tight truncate"><?= e($name) ?></div>
+                                <div class="text-[11.5px] text-chalk/50 mt-0.5 truncate"><?= e($role) ?> · <?= e($company) ?></div>
                             </div>
                         </figcaption>
                     </div>
@@ -930,7 +911,7 @@
             <div class="lg:col-span-4">
                 <div class="lg:sticky lg:top-28">
                     <span class="eyebrow reveal"><span class="eyebrow-num">[08]</span>FAQ</span>
-                    <h2 class="font-display font-normal tracking-tightest text-[clamp(2rem,4.5vw,3.5rem)] leading-[0.93] mt-7 mb-7 reveal text-balance">
+                    <h2 class="font-display font-normal tracking-tightest text-[clamp(1.85rem,3.8vw,3rem)] leading-[0.98] mt-6 mb-6 reveal text-balance">
                         Preguntas <span class="text-italic-serif text-grad-indigo">frecuentes</span>.
                     </h2>
                     <p class="text-chalk/55 text-[15px] leading-relaxed reveal">
@@ -981,9 +962,7 @@
             <!-- Caustic light pool (top center) -->
             <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 70% 90% at 50% 0%, rgba(91,94,255,0.34), transparent 60%);"></div>
             <!-- Liquid orbs -->
-            <div class="liquid-orb liquid-orb--indigo" style="width: 460px; height: 460px; top: -180px; left: -80px;"></div>
-            <div class="liquid-orb liquid-orb--cyan"   style="width: 320px; height: 320px; bottom: -120px; right: -40px;"></div>
-            <div class="liquid-orb liquid-orb--violet" style="width: 260px; height: 260px; top: 30%; right: 30%; opacity: 0.4;"></div>
+            <div class="liquid-orb liquid-orb--indigo" style="width: 420px; height: 420px; top: -180px; left: -80px;"></div>
 
             <div class="absolute inset-0 opacity-25 pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 48px 48px; -webkit-mask-image: radial-gradient(70% 70% at 50% 50%, #000, transparent 80%); mask-image: radial-gradient(70% 70% at 50% 50%, #000, transparent 80%);"></div>
 
