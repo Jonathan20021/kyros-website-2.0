@@ -621,6 +621,16 @@
                 // initial fill: first 3 events
                 for (let i = 0; i < 3; i++) feed.appendChild(makeRow(events[i]));
 
+                // Lock the container's height after the first render so insertions
+                // and removals during rotation cannot push the surrounding layout.
+                requestAnimationFrame(() => {
+                    const h = feed.offsetHeight;
+                    if (h > 0) {
+                        feed.style.height = h + 'px';
+                        feed.style.overflow = 'hidden';
+                    }
+                });
+
                 if (!reduce) {
                     let idx = 3;
                     setInterval(() => {
@@ -628,7 +638,8 @@
                         const oldRow = feed.lastElementChild;
                         if (oldRow) {
                             oldRow.classList.add('live-log--out');
-                            setTimeout(() => oldRow.remove(), 350);
+                            // Wait full transition (550ms) before removing the node
+                            setTimeout(() => oldRow.remove(), 600);
                         }
                         feed.insertBefore(newRow, feed.firstChild);
                         idx++;
