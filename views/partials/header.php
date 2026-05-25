@@ -1,11 +1,20 @@
 <?php require_once base_path('views/partials/icons.php'); ?>
 <header id="site-header" class="absolute top-0 inset-x-0 z-20">
+    <style>
+        /* Logo sizing — bigger on mobile so it's readable */
+        .nav-logo-link { margin: -8px 0; }
+        .nav-logo-img { height: 56px; width: auto; }
+        @media (max-width: 640px) {
+            .nav-logo-link { margin: -14px 0; }
+            .nav-logo-img { height: 68px; }
+        }
+    </style>
     <div class="max-w-[1440px] mx-auto p-2 sm:p-3">
         <div class="pill-nav">
             <!-- LEFT — Logo + nav links -->
             <div class="flex items-center gap-5">
-                <a href="<?= url('/') ?>" class="flex items-center" aria-label="KYROS Solutions" style="margin: -8px 0;">
-                    <img src="<?= asset('img/logo.png') ?>" alt="KYROS Solutions" class="block" style="height: 56px; width: auto;">
+                <a href="<?= url('/') ?>" class="flex items-center nav-logo-link" aria-label="KYROS Solutions">
+                    <img src="<?= asset('img/logo.png') ?>" alt="KYROS Solutions" class="block nav-logo-img" fetchpriority="high" decoding="async">
                 </a>
                 <nav class="hidden md:flex items-center gap-6">
                     <?php

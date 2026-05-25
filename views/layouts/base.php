@@ -316,10 +316,10 @@ $homeFaqs = [
             });
         })();
 
-        // ─── Spotlight cursor on cards ───
+        // ─── Spotlight cursor on cards (desktop only) ───
         (() => {
             const els = document.querySelectorAll('.spotlight');
-            if (!els.length) return;
+            if (!els.length || matchMedia('(pointer:coarse)').matches) return;
             els.forEach(el => {
                 el.addEventListener('pointermove', (e) => {
                     const r = el.getBoundingClientRect();
@@ -392,17 +392,24 @@ $homeFaqs = [
             counters.forEach(c => io.observe(c));
         })();
 
-        // ─── Section dot navigation ───
+        // ─── Section dot navigation (xl+ only — CSS hides it below 1380px) ───
         (() => {
             const nav = document.querySelector('.section-nav');
             if (!nav) return;
+            if (window.innerWidth < 1380) return; // skip scroll handler when nav is hidden
             const dots = nav.querySelectorAll('.section-nav__dot');
             const sections = Array.from(dots).map(d => document.querySelector(d.getAttribute('href'))).filter(Boolean);
+            let ticking = false;
             const update = () => {
-                const y = window.scrollY + window.innerHeight * 0.35;
-                let active = 0;
-                sections.forEach((s, i) => { if (s.offsetTop <= y) active = i; });
-                dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const y = window.scrollY + window.innerHeight * 0.35;
+                    let active = 0;
+                    sections.forEach((s, i) => { if (s.offsetTop <= y) active = i; });
+                    dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
+                    ticking = false;
+                });
             };
             update();
             window.addEventListener('scroll', update, { passive: true });

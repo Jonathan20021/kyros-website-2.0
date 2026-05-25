@@ -178,6 +178,28 @@
     mix-blend-mode: soft-light;
   }
 
+  /* ── MOBILE: kill heavy hero animations (huge perf win) ────
+     Conic gradients + filter:blur(100px) + mix-blend-mode running on rAF
+     destroys mobile GPU. Keep the colors static. */
+  @media (max-width: 1023px), (pointer: coarse) {
+    .hero-canvas::before {
+      animation: none !important;
+      filter: blur(60px);
+      opacity: 0.6;
+    }
+    .hero-canvas__chroma::before,
+    .hero-canvas__chroma::after {
+      animation: none !important;
+      filter: blur(60px) !important;
+      mix-blend-mode: normal !important;
+      opacity: 0.55;
+    }
+    .hero-canvas__fluted { display: none; }
+    .hero-canvas__grain { display: none; }
+    /* Also kill the background aurora and grain on body */
+    body::before, body::after { display: none !important; }
+  }
+
   /* ── Italic serif accent (orange brand color by default) ─ */
   em.text-italic-serif,
   .text-italic-serif {
