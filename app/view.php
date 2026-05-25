@@ -43,3 +43,48 @@ function partial(string $name, array $data = []): void
     extract($data, EXTR_SKIP);
     require base_path('views/partials/' . $name . '.php');
 }
+
+/**
+ * Render an admin view wrapped inside the admin layout.
+ *  $view -> dotted path inside views/admin/ (e.g. "projects.index")
+ *  $data -> variables extracted into the view scope
+ *  $meta -> admin chrome (adminTitle, adminSubtitle, adminAction HTML)
+ */
+function render_admin(string $view, array $data = [], array $meta = []): void
+{
+    $viewPath = base_path('views/admin/' . str_replace('.', '/', $view) . '.php');
+    if (!is_file($viewPath)) {
+        http_response_code(500);
+        echo "Admin view not found: " . htmlspecialchars($view);
+        exit;
+    }
+    $defaults = [
+        'adminTitle'    => '',
+        'adminSubtitle' => '',
+        'adminAction'   => '',
+    ];
+    $meta = array_merge($defaults, $meta);
+    extract($meta, EXTR_SKIP);
+    extract($data, EXTR_SKIP);
+
+    ob_start();
+    require $viewPath;
+    $content = ob_get_clean();
+
+    require base_path('views/admin/layout.php');
+}
+
+/**
+ * Bare admin view (no layout) — for login/install pages.
+ */
+function render_admin_bare(string $view, array $data = []): void
+{
+    $viewPath = base_path('views/admin/' . str_replace('.', '/', $view) . '.php');
+    if (!is_file($viewPath)) {
+        http_response_code(500);
+        echo "Admin view not found: " . htmlspecialchars($view);
+        exit;
+    }
+    extract($data, EXTR_SKIP);
+    require $viewPath;
+}

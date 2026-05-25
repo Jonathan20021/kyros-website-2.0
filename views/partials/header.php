@@ -1,151 +1,90 @@
-<header id="site-header" class="fixed top-0 inset-x-0 z-40 transition-all duration-500">
-    <style>
-        #site-header .nav-shell {
-            background: transparent;
-            backdrop-filter: blur(0px);
-            -webkit-backdrop-filter: blur(0px);
-            border-bottom: 1px solid transparent;
-            transition: background .5s cubic-bezier(0.16,1,0.3,1),
-                        backdrop-filter .5s cubic-bezier(0.16,1,0.3,1),
-                        border-color .5s, box-shadow .5s;
-            position: relative;
-            isolation: isolate;
-        }
-        #site-header .nav-shell::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            pointer-events: none;
-            background: linear-gradient(180deg, rgba(255,255,255,0.32), rgba(255,255,255,0.04) 18%, transparent 50%);
-            transition: opacity .5s cubic-bezier(0.16,1,0.3,1);
-            z-index: -1;
-            mix-blend-mode: screen;
-        }
-        #site-header .nav-shell::after {
-            content: '';
-            position: absolute;
-            left: 0; right: 0; bottom: -1px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16) 30%, rgba(255,255,255,0.16) 70%, transparent);
-            opacity: 0;
-            transition: opacity .5s;
-            pointer-events: none;
-        }
-        #site-header.is-scrolled .nav-shell {
-            background: rgba(8, 8, 14, 0.62);
-            backdrop-filter: blur(28px) saturate(1.9) brightness(1.06);
-            -webkit-backdrop-filter: blur(28px) saturate(1.9) brightness(1.06);
-            border-bottom-color: rgba(255,255,255,0.04);
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.10),
-                0 8px 24px -12px rgba(0,0,0,0.6);
-        }
-        #site-header.is-scrolled .nav-shell::before { opacity: 1; }
-        #site-header.is-scrolled .nav-shell::after  { opacity: 1; }
-
-        /* Segmented active pill — Apple style */
-        .nav-pill-link {
-            position: relative;
-            transition: color .35s var(--ease-out);
-        }
-        .nav-pill-link[data-active="true"] {
-            background:
-                linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(245,245,250,0.95) 100%);
-            color: #050508;
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.9),
-                inset 0 -1px 0 rgba(0,0,0,0.08),
-                0 6px 16px -4px rgba(255,255,255,0.18),
-                0 0 0 1px rgba(255,255,255,0.4);
-        }
-        .nav-pill-link[data-active="false"]:hover {
-            background: rgba(255,255,255,0.08);
-            color: #FFFFFF;
-        }
-
-        /* Logo glass tile */
-        .logo-tile {
-            position: relative;
-            isolation: isolate;
-        }
-        .logo-tile::after {
-            content: '';
-            position: absolute;
-            inset: 1px;
-            border-radius: inherit;
-            background: linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0) 55%);
-            pointer-events: none;
-            z-index: 1;
-        }
-        .logo-tile > * { position: relative; z-index: 2; }
-    </style>
-
-    <div class="nav-shell">
-        <div class="container flex items-center justify-between h-[76px]">
-            <a href="<?= url('/') ?>" class="flex items-center gap-2.5 group" data-cursor>
-                <span class="logo-tile inline-flex items-center justify-center w-10 h-10 rounded-xl text-white font-display font-medium text-base tracking-tighter"
-                      style="background: linear-gradient(135deg, #8A8AFF 0%, #5B5EFF 50%, #4B47E6 100%); box-shadow: 0 10px 28px -6px rgba(91,94,255,0.55), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(91,94,255,0.4);">
-                    K
-                    <span class="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"
-                          style="background: radial-gradient(60% 60% at 50% 0%, rgba(255,255,255,0.55), transparent 70%); z-index: 3;"></span>
-                </span>
-                <span class="leading-none">
-                    <span class="block font-display font-medium text-[17px] tracking-tightest text-chalk">KYROS</span>
-                    <span class="block text-[9px] tracking-[0.32em] text-chalk-quiet uppercase mt-0.5 font-medium">Solutions</span>
-                </span>
-            </a>
-
-            <nav class="hidden lg:flex items-center">
-                <div class="segmented">
+<?php require_once base_path('views/partials/icons.php'); ?>
+<header id="site-header" class="absolute top-0 inset-x-0 z-20">
+    <div class="max-w-[1440px] mx-auto p-2 sm:p-3">
+        <div class="pill-nav">
+            <!-- LEFT — Logo + nav links -->
+            <div class="flex items-center gap-5">
+                <a href="<?= url('/') ?>" class="flex items-center" aria-label="KYROS Solutions" style="margin: -8px 0;">
+                    <img src="<?= asset('img/logo.png') ?>" alt="KYROS Solutions" class="block" style="height: 56px; width: auto;">
+                </a>
+                <nav class="hidden md:flex items-center gap-6">
                     <?php
                     $links = [
                         ['/', 'Inicio'],
                         ['/services', 'Servicios'],
+                        ['/proyectos', 'Proyectos'],
+                        ['/blog', 'Blog'],
                         ['/about', 'Nosotros'],
                         ['/contact', 'Contacto'],
                     ];
                     foreach ($links as [$path, $label]):
-                        $isActive = is_active($path);
+                        $active = is_active($path);
                     ?>
-                        <a href="<?= url($path) ?>"
-                           data-active="<?= $isActive ? 'true' : 'false' ?>"
-                           class="nav-pill-link px-4 py-1.5 rounded-full text-[13px] font-medium tracking-tight <?= $isActive ? '' : 'text-chalk/70' ?>"><?= e($label) ?></a>
+                        <a href="<?= url($path) ?>" class="pill-nav__link <?= $active ? 'is-active' : '' ?>"><?= e($label) ?></a>
                     <?php endforeach; ?>
-                </div>
-            </nav>
-
-            <div class="flex items-center gap-2.5">
-                <a href="<?= url('/contact') ?>" class="hidden sm:inline-flex btn-ember text-[13px] py-2.5 px-5 magnetic">
-                    Iniciar proyecto
-                    <svg class="w-3.5 h-3.5 arrow-ic" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-5-5l5 5-5 5"/>
-                    </svg>
-                </a>
-
-                <button id="nav-toggle" type="button" aria-controls="nav-mobile" aria-expanded="false"
-                        class="lg:hidden w-10 h-10 rounded-xl flex items-center justify-center text-chalk transition liquid-glass-light"
-                        style="border: 1px solid rgba(255,255,255,0.12);">
-                    <span class="sr-only">Abrir menú</span>
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/>
-                    </svg>
-                </button>
+                </nav>
             </div>
-        </div>
 
-        <div id="nav-mobile" class="hidden lg:hidden border-t border-white/5 liquid-glass-heavy" style="border-radius: 0;">
-            <nav class="container py-6 flex flex-col gap-1.5">
-                <?php foreach ($links as [$path, $label]):
-                    $isActive = is_active($path);
-                ?>
-                    <a href="<?= url($path) ?>"
-                       class="px-4 py-3.5 rounded-2xl text-[15px] font-medium transition-colors <?= $isActive ? 'bg-chalk text-void' : 'text-chalk/80 hover:bg-white/5 hover:text-chalk' ?>"><?= e($label) ?></a>
-                <?php endforeach; ?>
-                <a href="<?= url('/contact') ?>" class="btn-ember mt-3 w-full text-[15px] py-3.5">Iniciar proyecto</a>
-            </nav>
+            <!-- RIGHT — Status + time + CTA -->
+            <div class="hidden md:flex items-center gap-4 lg:gap-5 pr-1">
+                <span class="hidden lg:inline text-[13px] text-ink-soft" style="color: var(--ink-muted);">Tomando proyectos para Q2 2026</span>
+                <span class="pill-nav__time">
+                    <?= icon('clock', 'w-3.5 h-3.5') ?>
+                    <span><span id="live-clock">--:--</span> en SDQ</span>
+                </span>
+                <a href="<?= url('/contact') ?>" class="btn-dark group">
+                    <span class="text-roll">
+                        <span class="text-roll__inner">
+                            <span>Hablemos del proyecto</span>
+                            <span>Hablemos del proyecto</span>
+                        </span>
+                    </span>
+                    <span class="arrow-circle">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5l5 5-5 5"/></svg>
+                    </span>
+                </a>
+            </div>
+
+            <!-- MOBILE menu button -->
+            <button id="nav-toggle" type="button" class="md:hidden w-10 h-10 rounded-full bg-[#111] text-white flex items-center justify-center" aria-label="Abrir menú">
+                <svg id="nav-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
+                <svg id="nav-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+            </button>
         </div>
     </div>
 </header>
 
-<div aria-hidden="true" class="h-[76px]"></div>
+<!-- Mobile slide-up sheet -->
+<div id="mobile-sheet" class="mobile-sheet md:hidden" aria-hidden="true">
+    <div class="mobile-sheet__backdrop" data-sheet-close></div>
+    <div class="mobile-sheet__panel">
+        <div class="flex items-center justify-between mb-5">
+            <span class="pill-nav__time"><?= icon('clock', 'w-3.5 h-3.5') ?> <span id="live-clock-mobile">--:--</span> en SDQ</span>
+            <button data-sheet-close class="w-9 h-9 rounded-full bg-[#111] text-white flex items-center justify-center" aria-label="Cerrar">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+            </button>
+        </div>
+        <nav class="flex flex-col gap-1 mb-6">
+            <?php foreach ($links as [$path, $label]):
+                $active = is_active($path);
+            ?>
+                <a href="<?= url($path) ?>"
+                   class="block py-3 text-[22px] font-medium tracking-tight transition-colors hover:text-[#F26522]"
+                   style="color: <?= $active ? '#F26522' : 'var(--ink)' ?>;">
+                    <?= e($label) ?>
+                </a>
+            <?php endforeach; ?>
+        </nav>
+        <a href="<?= url('/contact') ?>" class="btn-orange group w-full justify-center" style="padding: 14px 14px 14px 22px;">
+            <span class="text-roll">
+                <span class="text-roll__inner">
+                    <span>Iniciar proyecto</span>
+                    <span>Iniciar proyecto</span>
+                </span>
+            </span>
+            <span class="arrow-circle arrow-circle__orange">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5l5 5-5 5"/></svg>
+            </span>
+        </a>
+    </div>
+</div>

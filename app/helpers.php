@@ -10,19 +10,48 @@ function base_path(string $path = ''): string
     return rtrim(dirname(__DIR__), '/\\') . ($path ? DIRECTORY_SEPARATOR . ltrim($path, '/\\') : '');
 }
 
+/**
+ * Returns the base URL of the current installation, auto-detecting
+ * localhost so APP_URL can stay pinned to the canonical production URL
+ * without breaking local dev.
+ */
+function base_url(): string
+{
+    static $cached;
+    if ($cached !== null) return $cached;
+
+    $configured = rtrim((string) env('APP_URL', ''), '/');
+    $host = $_SERVER['HTTP_HOST'] ?? '';
+
+    $isLocal = $host && (
+        str_starts_with($host, 'localhost')
+        || str_starts_with($host, '127.')
+        || str_starts_with($host, '192.168.')
+        || str_starts_with($host, '10.')
+        || str_ends_with($host, '.local')
+        || str_ends_with($host, '.test')
+    );
+
+    if ($isLocal) {
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $scriptBase = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
+        $cached = $scheme . '://' . $host . $scriptBase;
+    } else {
+        $cached = $configured ?: ((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $host);
+    }
+    return $cached;
+}
+
 function url(string $path = ''): string
 {
-    $base = rtrim((string) env('APP_URL', ''), '/');
-    return $base . '/' . ltrim($path, '/');
+    return base_url() . '/' . ltrim($path, '/');
 }
 
 function asset(string $path): string
 {
-    $base = rtrim((string) env('APP_URL', ''), '/');
-    // Cache-bust assets using filemtime when available
     $local = base_path('assets/' . ltrim($path, '/'));
     $version = is_file($local) ? '?v=' . filemtime($local) : '';
-    return $base . '/assets/' . ltrim($path, '/') . $version;
+    return base_url() . '/assets/' . ltrim($path, '/') . $version;
 }
 
 function e(?string $value): string

@@ -1,11 +1,21 @@
 Options -MultiViews -Indexes
+ServerSignature Off
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Block access to sensitive files
+    # ── Force HTTPS + non-www on production (kyrosrd.com) ──
+    # Skips localhost / XAMPP for dev.
+    RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1) [NC]
+    RewriteCond %{HTTPS} off [OR]
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://kyrosrd.com%{REQUEST_URI} [L,R=301]
+
+    # Block access to sensitive files / dirs
     RewriteRule ^\.env - [F,L]
+    RewriteRule ^\.env\.example - [F,L]
     RewriteRule ^(app|views|resources|storage|node_modules)/ - [F,L]
+    RewriteRule ^(package\.json|package-lock\.json|tailwind\.config\.js|README\.md|composer\.json) - [F,L]
     RewriteRule (^|/)\. - [F,L]
 
     # Send everything that isn't a real file/dir to index.php
@@ -20,22 +30,43 @@ Options -MultiViews -Indexes
     Header set X-Frame-Options "SAMEORIGIN"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
     Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    Header set X-XSS-Protection "1; mode=block"
+    # Hide PHP signature
+    Header unset X-Powered-By
 </IfModule>
 
 # Compression
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+    AddOutputFilterByType DEFLATE text/html text/plain text/css
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE application/xml application/xml+rss
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE font/woff font/woff2
 </IfModule>
 
 # Cache static assets
 <IfModule mod_expires.c>
     ExpiresActive On
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType image/svg+xml "access plus 1 month"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/jpg "access plus 1 year"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/webp "access plus 1 year"
-    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresDefault "access plus 1 day"
+    ExpiresByType text/css                  "access plus 1 month"
+    ExpiresByType application/javascript    "access plus 1 month"
+    ExpiresByType image/svg+xml             "access plus 1 month"
+    ExpiresByType image/png                 "access plus 1 year"
+    ExpiresByType image/jpg                 "access plus 1 year"
+    ExpiresByType image/jpeg                "access plus 1 year"
+    ExpiresByType image/webp                "access plus 1 year"
+    ExpiresByType image/avif                "access plus 1 year"
+    ExpiresByType image/x-icon              "access plus 1 year"
+    ExpiresByType font/woff                 "access plus 1 year"
+    ExpiresByType font/woff2                "access plus 1 year"
+    ExpiresByType application/font-woff2    "access plus 1 year"
 </IfModule>
+
+# UTF-8 by default
+AddDefaultCharset UTF-8
+
+# Custom 404 → router handles it
+ErrorDocument 404 /index.php
+
+# Disable directory listing already via Options -Indexes above

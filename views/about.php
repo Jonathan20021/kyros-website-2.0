@@ -1,248 +1,276 @@
 <?php require_once base_path('views/partials/icons.php'); ?>
 
-<!-- HERO -->
-<section class="relative pt-20 lg:pt-32 pb-24 overflow-hidden" data-hero>
-    <div class="absolute inset-0 grid-mask"></div>
-    <div class="mesh-bg" style="opacity:0.55"></div>
+<!-- ════════════════════════════════════════════════════════════
+     HERO STRIP
+     ════════════════════════════════════════════════════════════ -->
+<section class="relative pt-32 sm:pt-36 pb-16 overflow-hidden bg-[#EFEFEF]">
+    <div class="hero-canvas" aria-hidden="true">
+        <div class="hero-canvas__chroma"></div>
+        <div class="hero-canvas__fluted"></div>
+        <div class="hero-canvas__grain"></div>
+    </div>
 
-    <!-- Liquid orbs -->
-    <div class="liquid-orb liquid-orb--indigo" style="width: 600px; height: 600px; top: -220px; left: -140px;"></div>
-    <div class="liquid-orb liquid-orb--cyan"   style="width: 400px; height: 400px; top: 20%; right: -80px;"></div>
-    <div class="liquid-orb liquid-orb--violet" style="width: 300px; height: 300px; bottom: -100px; left: 40%; opacity: 0.4;"></div>
-
-    <div class="absolute top-0 left-[15%] beam"></div>
-    <div class="absolute top-24 right-[20%] beam" style="animation-delay: 1.5s;"></div>
-
-    <div class="container relative z-10">
-        <div class="flex items-center justify-between gap-4 mb-14 reveal">
-            <div class="glow-tag"><span class="text-chalk">Sobre nosotros</span></div>
-            <div class="hidden md:flex items-center gap-3 text-[12px] text-chalk-quiet font-mono">
-                <span>Fundada en 2016</span>
-                <span class="w-1 h-1 rounded-full bg-chalk-quiet/50"></span>
+    <div class="relative z-20 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="flex items-center justify-between gap-4 mb-8 flex-wrap">
+            <div class="section-badge">
+                <span class="section-badge__num">A</span>
+                <span class="section-badge__label">Nosotros</span>
+            </div>
+            <div class="text-[12px] font-mono flex items-center gap-3" style="color: var(--ink-muted);">
+                <span>Fundada 2016</span>
+                <span class="w-1 h-1 rounded-full" style="background: var(--ink-muted);"></span>
                 <span>Santo Domingo · RD</span>
             </div>
         </div>
 
-        <div class="grid lg:grid-cols-12 gap-12 items-end">
+        <div class="grid lg:grid-cols-12 gap-10 items-end">
             <div class="lg:col-span-9">
-                <h1 class="font-display font-normal tracking-tightest leading-[0.95] text-balance
-                           text-[clamp(2.5rem,6.5vw,5.5rem)] reveal">
-                    <span class="block text-grad-cream">Tecnología que</span>
-                    <span class="block text-grad-cream"><span class="text-italic-serif text-grad-indigo">transforma</span> empresas.</span>
+                <h1 class="font-medium leading-[1.05] tracking-[-0.03em] text-balance"
+                    style="color: var(--ink); font-size: clamp(2rem, 6vw, 4.2rem);">
+                    Tecnología que<br>transforma empresas.
                 </h1>
             </div>
-            <div class="lg:col-span-3 reveal" style="transition-delay:180ms">
-                <p class="text-chalk/65 text-[16px] leading-relaxed">
-                    Somos un equipo de ingenieros, diseñadores y especialistas de seguridad construyendo el futuro digital de Latinoamérica desde República Dominicana.
+            <div class="lg:col-span-3">
+                <p class="text-[15px] sm:text-[16px] leading-[1.6]" style="color: var(--ink-soft);">
+                    Equipo de ingenieros, diseñadores y especialistas de seguridad construyendo el futuro digital de Latinoamérica desde República Dominicana.
                 </p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- MISSION & VISION -->
-<section class="section-tight">
-    <div class="container">
+<!-- ════════════════════════════════════════════════════════════
+     MISSION & VISION
+     ════════════════════════════════════════════════════════════ -->
+<section class="bg-white py-16 sm:py-20 lg:py-24">
+    <div class="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
         <div class="grid lg:grid-cols-12 gap-5">
-            <div class="lg:col-span-7 reveal tilt" style="min-height: 360px;">
-                <div class="tilt-target conic-border h-full overflow-hidden spotlight" style="padding: 1.75rem;">
-                    <div class="absolute top-0 right-0 w-72 h-72 rounded-full" style="background: radial-gradient(circle, rgba(91,94,255,0.32), transparent 65%); filter: blur(70px);"></div>
-                    <div class="relative h-full flex flex-col p-2 tilt-up">
-                        <div class="flex items-center gap-3 mb-7">
-                            <div class="icon-chip"><?= icon('target', 'w-6 h-6') ?></div>
-                            <span class="pill">Misión</span>
-                        </div>
-                        <h2 class="font-display text-[clamp(1.75rem,3.2vw,2.75rem)] tracking-tightest font-normal leading-[0.95] mb-6 text-balance">
-                            Hacer accesible <span class="text-italic-serif text-grad-indigo">nivel Silicon Valley</span> en LATAM.
-                        </h2>
-                        <p class="text-chalk/60 leading-relaxed text-[15px] max-w-lg mt-auto">
-                            Empoderar a empresas latinoamericanas con tecnología de vanguardia, transformando desafíos en oportunidades de crecimiento sostenible.
-                        </p>
-                    </div>
+            <!-- Mission -->
+            <div class="lg:col-span-7 rounded-2xl p-8 md:p-10" style="background: linear-gradient(135deg, #FFF4ED 0%, #FFFFFF 60%); border: 1px solid #FED7B5;">
+                <div class="flex items-center gap-3 mb-7">
+                    <span class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: #F26522; color: #fff;">
+                        <?= icon('target', 'w-5 h-5') ?>
+                    </span>
+                    <span class="pill" style="background: rgba(255,255,255,0.7); border-color: rgba(242,101,34,0.20);">Misión</span>
                 </div>
+                <h2 class="font-medium text-[clamp(1.5rem,2.8vw,2.5rem)] tracking-tight leading-[1.05] mb-5 text-balance" style="color: var(--ink);">
+                    Hacer accesible <em class="text-italic-serif" style="color: #F26522;">nivel Silicon Valley</em> en LATAM.
+                </h2>
+                <p class="text-[15px] leading-[1.65] max-w-xl" style="color: var(--ink-soft);">
+                    Empoderar a empresas latinoamericanas con tecnología de vanguardia, transformando desafíos en oportunidades de crecimiento sostenible.
+                </p>
             </div>
 
-            <div class="lg:col-span-5 tilt reveal" style="transition-delay:120ms; min-height: 360px;">
-                <div class="tilt-target card spotlight h-full">
-                    <div class="absolute top-0 right-0 w-60 h-60 rounded-full" style="background: radial-gradient(circle, rgba(34,211,238,0.22), transparent 65%); filter: blur(60px);"></div>
-                    <div class="relative h-full flex flex-col">
-                        <div class="flex items-center gap-3 mb-7 tilt-up">
-                            <div class="icon-chip icon-chip-cyan"><?= icon('trending', 'w-6 h-6') ?></div>
-                            <span class="pill">Visión</span>
-                        </div>
-                        <h2 class="font-display text-[clamp(1.5rem,2.5vw,2rem)] tracking-tightest font-normal leading-tight mb-5 text-balance">
-                            Ser la <span class="text-italic-serif">primera llamada</span> de toda empresa con tecnología que importa.
-                        </h2>
-                        <p class="text-chalk/60 leading-relaxed text-[14px] mt-auto">
-                            El socio tecnológico de referencia en Latinoamérica.
-                        </p>
-                    </div>
+            <!-- Vision -->
+            <div class="lg:col-span-5 rounded-2xl p-8 md:p-10 bg-white border border-[rgba(17,17,17,0.08)]">
+                <div class="flex items-center gap-3 mb-7">
+                    <span class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: #EEF2FF; color: #4F46E5;">
+                        <?= icon('trending', 'w-5 h-5') ?>
+                    </span>
+                    <span class="pill">Visión</span>
                 </div>
+                <h2 class="font-medium text-[clamp(1.3rem,2.2vw,1.9rem)] tracking-tight leading-tight mb-5 text-balance" style="color: var(--ink);">
+                    Ser la <em class="text-italic-serif" style="color: #4F46E5;">primera llamada</em> de toda empresa con tecnología que importa.
+                </h2>
+                <p class="text-[14px] leading-[1.65]" style="color: var(--ink-muted);">
+                    El socio tecnológico de referencia en Latinoamérica.
+                </p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- VALUES -->
-<section class="section border-t border-white/5">
-    <div class="container">
-        <div class="grid lg:grid-cols-12 gap-10 mb-16 items-end">
+<!-- ════════════════════════════════════════════════════════════
+     VALUES
+     ════════════════════════════════════════════════════════════ -->
+<section class="bg-[#F5F5F5] py-16 sm:py-20 lg:py-24 border-y border-[rgba(17,17,17,0.06)]">
+    <div class="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="grid lg:grid-cols-12 gap-10 mb-12 items-end">
             <div class="lg:col-span-7">
-                <span class="eyebrow reveal"><span class="eyebrow-num">[01]</span>Valores</span>
-                <h2 class="font-display font-normal tracking-tightest text-[clamp(2.25rem,5vw,4.25rem)] leading-[0.93] mt-7 reveal text-balance">
-                    Los principios que <span class="text-italic-serif text-grad-indigo">nos guían</span>.
+                <div class="section-badge mb-6">
+                    <span class="section-badge__num">1</span>
+                    <span class="section-badge__label">Valores</span>
+                </div>
+                <h2 class="font-medium leading-[1.05] tracking-[-0.03em] text-balance"
+                    style="color: var(--ink); font-size: clamp(1.75rem, 4vw, 3rem);">
+                    Los principios que <em class="text-italic-serif">nos guían</em>.
                 </h2>
             </div>
-            <div class="lg:col-span-4 lg:col-start-9 reveal">
-                <p class="text-chalk/55 text-[15px] leading-relaxed">
+            <div class="lg:col-span-4 lg:col-start-9">
+                <p class="text-[15px] leading-relaxed" style="color: var(--ink-soft);">
                     Cuatro principios operativos que vivimos en cada decisión, cada commit y cada cliente.
                 </p>
             </div>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-fluid-stagger>
             <?php
             $values = [
-                ['target',    '',                'Excelencia',   'Comprometidos con calidad superior en cada proyecto, sin atajos. Lo que sale lleva nuestro nombre.'],
-                ['lightbulb', 'icon-chip-cyan',   'Innovación',   'Adoptamos las últimas tecnologías cuando aportan valor real. Nunca por moda.'],
-                ['shield',    'icon-chip-violet', 'Seguridad',    'Protección y privacidad como prioridad fundamental desde el primer commit.'],
-                ['users',     'icon-chip-mono',   'Colaboración', 'Trabajamos junto a nuestros clientes como verdaderos socios, no como proveedores.'],
+                ['target',    '#F26522', '#FFF4ED', '#FED7B5', 'Excelencia',   'Comprometidos con calidad superior en cada proyecto, sin atajos. Lo que sale lleva nuestro nombre.'],
+                ['lightbulb', '#4F46E5', '#EEF2FF', '#C7D2FE', 'Innovación',   'Adoptamos las últimas tecnologías cuando aportan valor real. Nunca por moda.'],
+                ['shield',    '#7C3AED', '#F5F3FF', '#DDD6FE', 'Seguridad',    'Protección y privacidad como prioridad fundamental desde el primer commit.'],
+                ['users',     '#0891B2', '#ECFEFF', '#A5F3FC', 'Colaboración', 'Trabajamos junto a nuestros clientes como verdaderos socios, no como proveedores.'],
             ];
-            foreach ($values as $i => [$ico, $chipClass, $title, $desc]):
+            foreach ($values as $i => [$ic, $fg, $bg, $bd, $title, $desc]):
             ?>
-                <div class="tilt reveal" style="transition-delay: <?= $i*70 ?>ms;">
-                    <div class="tilt-target card spotlight flex flex-col" style="min-height: 280px;">
-                        <div class="icon-chip <?= $chipClass ?> mb-7 tilt-up"><?= icon($ico, 'w-6 h-6') ?></div>
-                        <span class="font-mono text-[10px] tracking-[0.2em] text-chalk-quiet mb-2">0<?= $i+1 ?></span>
-                        <h3 class="font-display text-[20px] font-normal tracking-tighter mb-2"><?= e($title) ?></h3>
-                        <p class="text-chalk/55 text-[13.5px] leading-relaxed"><?= e($desc) ?></p>
+                <div class="rounded-2xl p-6 bg-white border border-[rgba(17,17,17,0.06)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
+                    <div class="flex items-start justify-between mb-5">
+                        <span class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: <?= $bg ?>; color: <?= $fg ?>; border: 1px solid <?= $bd ?>;">
+                            <?= icon($ic, 'w-5 h-5') ?>
+                        </span>
+                        <span class="text-[12px] font-mono" style="color: var(--ink-muted);">0<?= $i+1 ?></span>
                     </div>
+                    <h3 class="font-medium text-[17px] tracking-tight mb-2" style="color: var(--ink);"><?= e($title) ?></h3>
+                    <p class="text-[13.5px] leading-relaxed" style="color: var(--ink-muted);"><?= e($desc) ?></p>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
 
-<!-- TEAM -->
-<section class="section">
-    <div class="container">
-        <div class="grid lg:grid-cols-12 gap-10 mb-16 items-end">
-            <div class="lg:col-span-8">
-                <span class="eyebrow reveal"><span class="eyebrow-num">[02]</span>Equipo</span>
-                <h2 class="font-display font-normal tracking-tightest text-[clamp(2.25rem,5vw,4.25rem)] leading-[0.93] mt-7 reveal text-balance">
-                    Las personas <span class="text-italic-serif text-grad-indigo">detrás</span> de KYROS.
+<!-- ════════════════════════════════════════════════════════════
+     TEAM
+     ════════════════════════════════════════════════════════════ -->
+<section class="bg-white py-16 sm:py-20 lg:py-24">
+    <div class="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="grid lg:grid-cols-12 gap-10 mb-12 items-end">
+            <div class="lg:col-span-7">
+                <div class="section-badge mb-6">
+                    <span class="section-badge__num">2</span>
+                    <span class="section-badge__label">Equipo</span>
+                </div>
+                <h2 class="font-medium leading-[1.05] tracking-[-0.03em] text-balance"
+                    style="color: var(--ink); font-size: clamp(1.75rem, 4vw, 3rem);">
+                    Las personas <em class="text-italic-serif">detrás</em> de KYROS.
                 </h2>
             </div>
-            <div class="lg:col-span-4 reveal">
-                <p class="text-chalk/55 text-[15px] leading-relaxed">
+            <div class="lg:col-span-4 lg:col-start-9">
+                <p class="text-[15px] leading-relaxed" style="color: var(--ink-soft);">
                     Especialistas con +10 años de experiencia promedio, organizados para entregar valor desde la semana uno.
                 </p>
             </div>
         </div>
 
         <!-- Founder spotlight -->
-        <div class="reveal mb-5 tilt" style="min-height: 400px;">
-            <div class="tilt-target conic-border overflow-hidden spotlight" style="padding: 2rem;">
-                <div class="absolute top-0 right-0 w-[28rem] h-[28rem] rounded-full" style="background: radial-gradient(circle, rgba(91,94,255,0.30), transparent 65%); filter: blur(80px);"></div>
-                <div class="relative grid md:grid-cols-12 gap-10 items-center p-2 tilt-up">
-                    <div class="md:col-span-4">
-                        <div class="aspect-square max-w-[280px] rounded-3xl p-[2px] mx-auto md:mx-0"
-                             style="background: conic-gradient(from 180deg at 50% 50%, var(--indigo), var(--cyan), var(--violet), var(--indigo));">
-                            <div class="w-full h-full rounded-[22px] flex items-center justify-center text-7xl font-display font-normal text-chalk tracking-tightest"
-                                 style="background: linear-gradient(180deg, #12121A, #050508);">
-                                JS
-                            </div>
-                        </div>
+        <div class="rounded-2xl p-8 sm:p-10 mb-5 relative overflow-hidden" style="background: linear-gradient(135deg, #EFEFEF 0%, #FFFFFF 100%); border: 1px solid rgba(17,17,17,0.08);">
+            <div class="absolute -top-20 -right-20 w-96 h-96 rounded-full" style="background: radial-gradient(circle, rgba(242,101,34,0.10), transparent 65%); filter: blur(60px);"></div>
+            <div class="relative grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-4">
+                    <div class="aspect-square max-w-[260px] rounded-2xl mx-auto md:mx-0 flex items-center justify-center text-[80px] font-medium tracking-tight text-white" style="background: linear-gradient(135deg, #F26522 0%, #C44A0F 100%); letter-spacing: -0.04em;">
+                        JS
                     </div>
-                    <div class="md:col-span-8">
-                        <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-indigo-300 font-medium">Fundador & CEO</span>
-                        <h3 class="font-display text-[clamp(1.75rem,3vw,2.5rem)] tracking-tightest font-normal mt-3 mb-2 text-balance">
-                            Jonathan <span class="text-italic-serif text-chalk/65">Sandoval</span> Ferreira
-                        </h3>
-                        <p class="text-chalk/45 mb-5 text-[13px] font-mono">Software Architect · 8+ años</p>
-                        <p class="text-chalk/70 leading-relaxed text-[15.5px] max-w-2xl">
-                            Profesional en desarrollo de software, ciberseguridad e inteligencia artificial con más de 8 años de experiencia en el mercado latinoamericano e internacional. Lidera la visión técnica y estratégica de KYROS Solutions.
-                        </p>
-                        <div class="hairline my-6"></div>
-                        <div class="flex flex-wrap gap-2">
-                            <?php foreach (['Software architecture','Cybersecurity','AI/ML','Engineering leadership'] as $t): ?>
-                                <span class="pill"><?= e($t) ?></span>
-                            <?php endforeach; ?>
-                        </div>
+                </div>
+                <div class="md:col-span-8">
+                    <p class="text-[11px] font-mono tracking-[0.22em] uppercase font-medium mb-3" style="color: #F26522;">Fundador &amp; CEO</p>
+                    <h3 class="font-medium text-[clamp(1.5rem,3vw,2.25rem)] tracking-tight mb-2" style="color: var(--ink);">
+                        Jonathan <em class="text-italic-serif" style="color: var(--ink-soft);">Sandoval</em> Ferreira
+                    </h3>
+                    <p class="text-[13px] font-mono mb-4" style="color: var(--ink-muted);">Software Architect · 8+ años</p>
+                    <p class="text-[15px] leading-relaxed max-w-2xl" style="color: var(--ink-soft);">
+                        Profesional en desarrollo de software, ciberseguridad e inteligencia artificial con más de 8 años de experiencia en el mercado latinoamericano e internacional. Lidera la visión técnica y estratégica de KYROS Solutions.
+                    </p>
+                    <div class="hairline my-5"></div>
+                    <div class="flex flex-wrap gap-2">
+                        <?php foreach (['Software architecture','Cybersecurity','AI/ML','Engineering leadership'] as $t): ?>
+                            <span class="pill"><?= e($t) ?></span>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-5">
+        <!-- Team grid -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" data-fluid-stagger>
             <?php
             $team = [
-                ['AR', 'Ana Rodríguez',  'CTO',                  '12+ años', 'Lidera arquitectura técnica y estándares de ingeniería.', ''],
-                ['MT', 'Miguel Torres',  'Head of Security',     '10+ años', 'Pentesting, SOC y respuesta ante incidentes.', 'avatar-sky'],
-                ['LS', 'Laura Sánchez',  'Lead Developer',       '8+ años',  'Frontend, fullstack y diseño de sistemas escalables.', 'avatar-amber'],
+                ['AR', 'Ana Rodríguez',  'CTO',              '12+ años', 'Lidera arquitectura técnica y estándares de ingeniería.', '#F26522'],
+                ['MT', 'Miguel Torres',  'Head of Security', '10+ años', 'Pentesting, SOC y respuesta ante incidentes.',           '#4F46E5'],
+                ['LS', 'Laura Sánchez',  'Lead Developer',   '8+ años',  'Frontend, fullstack y diseño de sistemas escalables.',   '#7C3AED'],
             ];
-            foreach ($team as $i => [$initials, $name, $role, $exp, $bio, $avatarCls]):
+            foreach ($team as [$initials, $name, $role, $exp, $bio, $col]):
             ?>
-                <div class="tilt reveal" style="transition-delay: <?= $i*80 ?>ms;">
-                    <div class="tilt-target card spotlight">
-                        <div class="flex items-center gap-4 mb-5 tilt-up">
-                            <div class="avatar <?= e($avatarCls) ?> w-14 h-14 text-base tracking-tight"><?= e($initials) ?></div>
-                            <div>
-                                <h3 class="font-display text-[17px] font-normal tracking-tight"><?= e($name) ?></h3>
-                                <p class="text-chalk/45 text-[12px]"><?= e($role) ?> · <?= e($exp) ?></p>
-                            </div>
+                <div class="rounded-2xl p-6 bg-white border border-[rgba(17,17,17,0.06)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-medium text-[16px] tracking-tight" style="background: <?= $col ?>;">
+                            <?= e($initials) ?>
                         </div>
-                        <p class="text-chalk/55 text-[13.5px] leading-relaxed"><?= e($bio) ?></p>
+                        <div>
+                            <h3 class="font-medium text-[16px] tracking-tight" style="color: var(--ink);"><?= e($name) ?></h3>
+                            <p class="text-[12px]" style="color: var(--ink-muted);"><?= e($role) ?> · <?= e($exp) ?></p>
+                        </div>
                     </div>
+                    <p class="text-[13.5px] leading-relaxed" style="color: var(--ink-muted);"><?= e($bio) ?></p>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
 
-<!-- STATS -->
-<section class="section-tight border-t border-white/5 relative overflow-hidden">
-    <div class="absolute inset-0 dotted-mask opacity-50"></div>
-    <div class="container relative z-10">
-        <div class="liquid-glass grid grid-cols-2 md:grid-cols-4 gap-0" style="border-radius: 28px;">
+<!-- ════════════════════════════════════════════════════════════
+     STATS
+     ════════════════════════════════════════════════════════════ -->
+<section class="bg-[#F5F5F5] py-14 sm:py-16 border-y border-[rgba(17,17,17,0.06)]">
+    <div class="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[rgba(17,17,17,0.08)] rounded-2xl overflow-hidden">
             <?php
-            $stats = [['10','+','AÑOS','Experiencia'], ['80','+','CLIENTES','Satisfechos'], ['120','+','PROYECTOS','Completados'], ['99','%','TASA','De éxito']];
-            foreach ($stats as $i => [$v, $suffix, $kpi, $desc]):
+            $stats = [
+                ['10', '+', 'Años',      'De operación'],
+                ['80', '+', 'Clientes',  'Satisfechos'],
+                ['120','+', 'Proyectos', 'Completados'],
+                ['99', '%', 'Tasa',      'De éxito'],
+            ];
+            foreach ($stats as [$v, $suffix, $kpi, $desc]):
             ?>
-                <div class="p-6 sm:p-8 md:p-10 reveal <?= ($i % 2 === 1) ? 'border-l border-white/5' : '' ?> <?= $i >= 2 ? 'border-t border-white/5 md:border-t-0 md:border-l' : '' ?>"
-                     style="transition-delay: <?= $i*70 ?>ms;">
-                    <div class="big-num stat-shine text-[clamp(3rem,6vw,5.5rem)] mb-3">
+                <div class="bg-white p-6 md:p-8">
+                    <div class="big-num text-[clamp(2.5rem,5vw,4rem)] mb-2 leading-none" style="color: var(--ink);">
                         <span data-counter="<?= e($v) ?>" data-suffix="<?= e($suffix) ?>">0<?= e($suffix) ?></span>
                     </div>
-                    <div class="font-mono text-[10px] tracking-[0.24em] uppercase text-chalk-quiet mb-1"><?= e($kpi) ?></div>
-                    <div class="text-[13px] text-chalk/55"><?= e($desc) ?></div>
+                    <div class="text-[12px] font-mono uppercase tracking-[0.18em] mb-1" style="color: var(--ink-muted);"><?= e($kpi) ?></div>
+                    <div class="text-[13.5px]" style="color: var(--ink-soft);"><?= e($desc) ?></div>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
 
-<!-- CTA -->
-<section class="section-tight">
-    <div class="container">
-        <div class="liquid-panel reveal overflow-hidden" style="padding: clamp(1.5rem, 3.5vw, 3rem);">
-            <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 100% at 50% 0%, rgba(91,94,255,0.40), transparent 60%);"></div>
-            <div class="liquid-orb liquid-orb--indigo" style="width: 440px; height: 440px; top: -140px; right: -80px;"></div>
-            <div class="liquid-orb liquid-orb--cyan" style="width: 320px; height: 320px; bottom: -120px; left: 20%; opacity: 0.4;"></div>
-            <div class="relative max-w-2xl">
-                <div class="eyebrow mb-7">Discovery gratuito</div>
-                <h2 class="font-display font-normal tracking-tightest text-[clamp(2.25rem,5vw,4.25rem)] leading-[0.93] text-balance">
-                    ¿Hablamos<span class="text-italic-serif text-grad-indigo">?</span>
+<!-- ════════════════════════════════════════════════════════════
+     CTA
+     ════════════════════════════════════════════════════════════ -->
+<section class="bg-white pt-16 sm:pt-20 pb-16 sm:pb-24">
+    <div class="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="relative rounded-3xl overflow-hidden p-10 sm:p-14 lg:p-20 bg-[#EFEFEF]">
+            <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+                <div class="hero-canvas__chroma"></div>
+                <div class="hero-canvas__grain"></div>
+            </div>
+
+            <div class="relative z-10 max-w-2xl">
+                <div class="section-badge mb-6">
+                    <span class="section-badge__num">3</span>
+                    <span class="section-badge__label">Discovery gratuito</span>
+                </div>
+                <h2 class="font-medium leading-[1.05] tracking-[-0.03em] text-balance mb-6"
+                    style="color: var(--ink); font-size: clamp(1.75rem, 5vw, 3.75rem);">
+                    ¿Hablamos<em class="text-italic-serif">?</em>
                 </h2>
-                <p class="text-chalk/60 text-[16px] mt-6 leading-relaxed">
-                    Cuéntanos lo que necesitas. Te respondemos en menos de 24 horas con una propuesta concreta.
+                <p class="text-[15px] sm:text-[17px] leading-[1.6] max-w-xl mb-8" style="color: var(--ink-soft);">
+                    Cuéntanos qué necesitas. Respondemos en menos de 24 horas con una propuesta concreta.
                 </p>
-                <div class="flex flex-wrap gap-3 mt-8">
-                    <a href="<?= url('/contact') ?>" class="btn-ember sheen magnetic">
-                        Iniciar conversación
-                        <svg class="w-4 h-4 arrow-ic" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-5-5l5 5-5 5"/></svg>
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center">
+                    <a href="<?= url('/contact') ?>" class="btn-orange group">
+                        <span class="text-roll">
+                            <span class="text-roll__inner">
+                                <span>Iniciar conversación</span>
+                                <span>Iniciar conversación</span>
+                            </span>
+                        </span>
+                        <span class="arrow-circle arrow-circle--lg arrow-circle__orange">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5l5 5-5 5"/></svg>
+                        </span>
                     </a>
-                    <a href="<?= url('/services') ?>" class="btn-outline">Ver servicios</a>
+                    <a href="<?= url('/services') ?>" class="inline-flex items-center gap-2 text-[14px] font-medium hover:text-[#F26522] transition-colors" style="color: var(--ink);">
+                        Ver servicios →
+                    </a>
                 </div>
             </div>
         </div>

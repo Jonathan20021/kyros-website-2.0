@@ -1,20 +1,30 @@
-<section class="pt-20 lg:pt-28 pb-24 relative overflow-hidden">
-    <div class="absolute inset-0 grid-mask"></div>
-    <div class="mesh-bg" style="opacity:0.35"></div>
-    <div class="liquid-orb liquid-orb--indigo" style="width: 520px; height: 520px; top: -180px; left: -120px;"></div>
-    <div class="liquid-orb liquid-orb--cyan"   style="width: 340px; height: 340px; top: 20%; right: -60px; opacity: 0.5;"></div>
-    <div class="container max-w-3xl relative z-10">
-        <a href="<?= url('/') ?>" class="inline-flex items-center gap-2 text-[13px] text-white/55 hover:text-white transition mb-10 font-mono">
+<?php require_once base_path('views/partials/icons.php'); ?>
+
+<section class="relative pt-32 sm:pt-36 pb-12 overflow-hidden bg-[#EFEFEF]">
+    <div class="hero-canvas" aria-hidden="true">
+        <div class="hero-canvas__chroma"></div>
+        <div class="hero-canvas__fluted"></div>
+        <div class="hero-canvas__grain"></div>
+    </div>
+    <div class="relative z-20 max-w-[1000px] mx-auto px-5 sm:px-8">
+        <a href="<?= url('/') ?>" class="inline-flex items-center gap-2 text-[13px] font-mono mb-8 transition-colors hover:text-[#F26522]" style="color: var(--ink-soft);">
             ← Volver al inicio
         </a>
-        <div class="eyebrow mb-6"><span class="text-white">Legal</span></div>
-        <h1 class="font-display font-medium tracking-tightest text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] mb-4 text-balance">
-            Política de <span class="text-italic-serif text-grad-ember">Privacidad</span>.
+        <div class="section-badge mb-6">
+            <span class="section-badge__num">§</span>
+            <span class="section-badge__label">Legal</span>
+        </div>
+        <h1 class="font-medium leading-[1.05] tracking-[-0.03em] text-balance mb-3"
+            style="color: var(--ink); font-size: clamp(2rem, 5vw, 3.75rem);">
+            Política de <em class="text-italic-serif">Privacidad</em>.
         </h1>
-        <p class="text-white/45 mb-12 text-[13px] font-mono">Última actualización: <?= date('d/m/Y') ?></p>
+        <p class="text-[13px] font-mono mb-12" style="color: var(--ink-muted);">Última actualización: <?= date('d/m/Y') ?></p>
+    </div>
+</section>
 
-        <div class="liquid-panel">
-        <div class="prose prose-invert prose-headings:font-display prose-headings:tracking-tighter prose-headings:font-medium prose-headings:text-white prose-a:text-indigo-300 hover:prose-a:text-indigo-200 prose-p:text-white/72 prose-li:text-white/72 prose-strong:text-white max-w-none">
+<section class="bg-white py-16 sm:py-20">
+    <div class="max-w-[820px] mx-auto px-5 sm:px-8">
+        <div class="prose-legal">
             <p>
                 En <strong>KYROS Solutions</strong> respetamos tu privacidad. Esta política explica qué información recopilamos cuando interactúas con nuestro sitio kyrosrd.com y cómo la utilizamos.
             </p>
@@ -32,9 +42,7 @@
                 <li>Para mejorar nuestro sitio web y servicios.</li>
                 <li>Para cumplir con obligaciones legales y proteger nuestros derechos.</li>
             </ul>
-            <p>
-                <strong>No vendemos ni compartimos</strong> tu información personal con terceros para fines de marketing.
-            </p>
+            <p><strong>No vendemos ni compartimos</strong> tu información personal con terceros para fines de marketing.</p>
 
             <h2>3. Conservación de datos</h2>
             <p>
@@ -59,6 +67,16 @@
                 <a href="tel:+18495024061">+1 (849) 502-4061</a>.
             </p>
         </div>
-        </div>
     </div>
 </section>
+
+<style>
+    .prose-legal { color: var(--ink-soft); font-size: 16px; line-height: 1.75; }
+    .prose-legal h2 { color: var(--ink); font-size: 1.35rem; font-weight: 600; margin: 2.2em 0 0.6em; letter-spacing: -0.02em; }
+    .prose-legal p { margin: 0 0 1.25em; }
+    .prose-legal a { color: #F26522; text-decoration: underline; text-underline-offset: 3px; }
+    .prose-legal a:hover { color: #E05A1A; }
+    .prose-legal ul { margin: 0 0 1.5em 1.5em; }
+    .prose-legal li { margin-bottom: 0.6em; }
+    .prose-legal strong { color: var(--ink); font-weight: 600; }
+</style>
