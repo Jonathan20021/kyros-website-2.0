@@ -519,9 +519,10 @@
         }, 2500);
     })();
 
-    // Lenis smooth scroll for admin
+    // Lenis smooth scroll for admin (desktop only — let mobile use native scroll)
     (() => {
         if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (matchMedia('(pointer: coarse)').matches) return;
         const iv = setInterval(() => {
             if (!window.Lenis) return;
             clearInterval(iv);

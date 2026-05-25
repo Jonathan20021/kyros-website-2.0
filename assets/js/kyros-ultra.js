@@ -89,6 +89,10 @@
     setTimeout(() => clearInterval(iv), 8000);
   };
 
+  // Don't init Lenis on touch devices — let native scroll handle mobile/tablet
+  const isTouch = matchMedia('(pointer: coarse)').matches;
+  if (isTouch) return;
+
   ready(['Lenis'], () => {
     const lenis = new window.Lenis({
       duration: 1.2,
@@ -96,7 +100,6 @@
       smoothWheel: true,
       smoothTouch: false,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
       lerp: 0.10,
     });
     window.__lenis = lenis;
