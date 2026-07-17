@@ -8,6 +8,47 @@
 (() => {
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ── Stat count-up ──────────────────────────────────────────
+     The final value is already in the markup, so if JS never runs
+     (or motion is reduced) the number just sits there, correct. */
+  if (!REDUCE && 'IntersectionObserver' in window) {
+    const nums = document.querySelectorAll('[data-count-to]');
+    if (nums.length) {
+      const run = (el) => {
+        const to = parseFloat(el.dataset.countTo);
+        if (!isFinite(to)) return;
+        const pre = el.dataset.countPrefix || '';
+        const suf = el.dataset.countSuffix || '';
+        const dur = 1100;
+        // The markup already holds the correct final string — keep it so a
+        // stalled/throttled rAF can never strand the number at 0.
+        const final = el.textContent;
+        let t0 = null, done = false;
+        const settle = () => { if (!done) { done = true; el.textContent = final; } };
+        const tick = (t) => {
+          if (done) return;
+          if (t0 === null) t0 = t;
+          const p = Math.min((t - t0) / dur, 1);
+          if (p >= 1) { settle(); return; }
+          // easeOutExpo — fast start, gentle settle
+          const e = 1 - Math.pow(2, -10 * p);
+          el.textContent = pre + Math.round(to * e) + suf;
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        setTimeout(settle, dur + 600);
+      };
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          run(en.target);
+          io.unobserve(en.target);
+        });
+      }, { threshold: 0.4 });
+      nums.forEach(el => io.observe(el));
+    }
+  }
+
   /* ── Image fade-in on load (works even if JS partial fails) ── */
   document.querySelectorAll('img[data-fade]').forEach(img => {
     if (img.complete && img.naturalWidth > 0) {

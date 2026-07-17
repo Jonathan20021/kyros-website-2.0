@@ -69,6 +69,10 @@ $router->get('/terms',   fn() => render_view('terms',   [], ['title' => 'Términ
 $router->get('/contact',  [ContactController::class, 'show']);
 $router->post('/contact', [ContactController::class, 'submit']);
 
+/* ── Project brief ("Hablemos del proyecto") ─────────────── */
+$router->get('/hablemos',  [BriefController::class, 'show']);
+$router->post('/hablemos', [BriefController::class, 'submit']);
+
 /* ── Public blog ──────────────────────────────────────────── */
 $router->get('/blog',                       [BlogController::class, 'index']);
 $router->get('/blog/categoria/{slug}',      [BlogController::class, 'byCategory']);
@@ -108,6 +112,12 @@ $router->post('/admin/categories/{id}/update', [CategoryAdminController::class, 
 $router->post('/admin/categories/{id}/delete', [CategoryAdminController::class, 'destroy']);
 $router->post('/admin/categories/ajax-store',[CategoryAdminController::class, 'ajaxStore']);
 
+$router->get('/admin/leads',                 [LeadAdminController::class, 'index']);
+$router->get('/admin/leads/{id}',            [LeadAdminController::class, 'show']);
+$router->post('/admin/leads/{id}/status',    [LeadAdminController::class, 'updateStatus']);
+$router->post('/admin/leads/{id}/notes',     [LeadAdminController::class, 'updateNotes']);
+$router->post('/admin/leads/{id}/delete',    [LeadAdminController::class, 'destroy']);
+
 $router->get('/admin/settings',              [AdminController::class, 'settings']);
 $router->post('/admin/settings',             [AdminController::class, 'updateSettings']);
 
@@ -127,6 +137,7 @@ $router->get('/sitemap.xml', function () {
         ['/services/network-infrastructure',   '0.8', 'monthly'],
         ['/about',                             '0.7', 'monthly'],
         ['/contact',                           '0.7', 'monthly'],
+        ['/hablemos',                          '0.9', 'monthly'],
     ];
     echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">' . "\n";

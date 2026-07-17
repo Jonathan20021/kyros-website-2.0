@@ -23,7 +23,7 @@
     <div class="relative z-10 w-full max-w-md">
         <div class="text-center mb-6">
             <a href="<?= url('/') ?>" class="inline-flex items-center gap-3">
-                <img src="<?= asset('img/logo.png') ?>" alt="KYROS Solutions" style="height: 72px; width: auto; max-width: 220px; object-fit: contain;">
+                <img src="<?= asset('img/logo.png') ?>" alt="KYROS Solutions" style="height: 30px; width: auto;">
                 <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-[0.16em] self-center" style="background: var(--orange); color: #fff;">Admin</span>
             </a>
         </div>

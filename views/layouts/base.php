@@ -447,5 +447,9 @@ $homeFaqs = [
 
     <!-- Lenis smooth scroll + GSAP scroll-tied accents (loaded after DOM, deferred-safe) -->
     <script src="<?= asset('js/kyros-ultra.js') ?>" defer></script>
+    <?php if (current_path() === '/hablemos'): ?>
+        <!-- Brief wizard: progressive enhancement, only on that page -->
+        <script src="<?= asset('js/kyros-brief.js') ?>" defer></script>
+    <?php endif; ?>
 </body>
 </html>

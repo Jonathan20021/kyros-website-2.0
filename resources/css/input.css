@@ -259,6 +259,9 @@
     gap: 6px;
     color: var(--ink-muted);
     font-size: 13px;
+    /* Must never wrap to a second line — it would overlap the nav links. */
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   /* ────────────────────────────────────────────────────────
@@ -433,20 +436,99 @@
   }
   .case-card__media {
     position: relative;
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
     background: #1a1d2e;
+    padding: 14px 14px 0;
+    transition: transform .5s var(--ease-axion), box-shadow .5s var(--ease-axion);
+    will-change: transform;
   }
-  .case-card__media img,
-  .case-card__media video {
-    width: 100%; height: 100%;
-    object-fit: cover;
+  .case-card:hover .case-card__media {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -20px rgba(17,17,17,0.35);
+  }
+
+  /* Browser chrome — traffic lights + address pill */
+  .case-chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 30px;
+    padding: 0 4px 8px;
+  }
+  .case-chrome__dots {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .case-chrome__dots i {
+    width: 8px; height: 8px;
+    border-radius: 9999px;
+    background: currentColor;
+    opacity: .35;
+    transition: opacity .4s ease, background-color .4s ease;
+  }
+  .case-card:hover .case-chrome__dots i:nth-child(1) { background: #FF5F57; opacity: 1; }
+  .case-card:hover .case-chrome__dots i:nth-child(2) { background: #FEBC2E; opacity: 1; }
+  .case-card:hover .case-chrome__dots i:nth-child(3) { background: #28C840; opacity: 1; }
+  .case-chrome__url {
+    flex: 1;
+    min-width: 0;
+    height: 20px;
+    border-radius: 9999px;
+    background: currentColor;
+    opacity: .10;
+  }
+  .case-chrome__url span {
     display: block;
-    transition: transform .8s var(--ease-axion);
+    padding: 0 10px;
+    font-size: 10px;
+    line-height: 20px;
+    letter-spacing: .04em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .case-card:hover .case-card__media img,
-  .case-card:hover .case-card__media video {
-    transform: scale(1.04);
+
+  /* Screenshot viewport — fits by width, pans down on hover */
+  .case-shot {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    height: var(--shot-h, 300px);
+    background: rgba(255,255,255,0.06);
+  }
+  .case-shot img,
+  .case-shot video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 5s cubic-bezier(.4,0,.2,1);
+    will-change: transform;
+  }
+  /* translateY(%) is relative to the image's own height, so this lands the
+     bottom of any tall screenshot exactly at the bottom of the viewport. */
+  .case-card:hover .case-shot img,
+  .case-card:hover .case-shot video {
+    transform: translateY(calc(-100% + var(--shot-h, 300px)));
+  }
+  .case-shot__fade {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 56px;
+    background: linear-gradient(to top, rgba(0,0,0,0.28), transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  .case-card:hover .case-shot__fade { opacity: 1; }
+  @media (max-width: 640px) {
+    .case-shot { --shot-h: 220px; }
   }
   .case-card__title {
     margin-top: 16px;
@@ -546,6 +628,642 @@
   /* ────────────────────────────────────────────────────────
      IMAGE BLOCKS (about section, decorative)
      ──────────────────────────────────────────────────────── */
+  /* ────────────────────────────────────────────────────────
+     STAT PANEL — stands in for the about photos until real
+     ones are dropped at assets/img/about-{estudio,equipo}.*
+     ──────────────────────────────────────────────────────── */
+  .stat-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(16px, 2vw, 26px);
+    isolation: isolate;
+  }
+  /* Doubled class: these panels are also .img-block, which sets its own
+     background later in this file — equal specificity would let it win. */
+  .stat-panel.stat-panel--dark {
+    background: linear-gradient(150deg, #16202e 0%, #0d1420 60%, #111820 100%);
+    color: #fff;
+  }
+  .stat-panel.stat-panel--orange {
+    background: linear-gradient(140deg, #F26522 0%, #E4551A 55%, #C44A0F 100%);
+    color: #fff;
+  }
+  /* Blueprint grid — drifts slowly so the panel never feels static */
+  .stat-panel__grid {
+    position: absolute;
+    inset: -40px;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(currentColor 1px, transparent 1px),
+      linear-gradient(90deg, currentColor 1px, transparent 1px);
+    background-size: 34px 34px;
+    opacity: .10;
+    -webkit-mask-image: radial-gradient(120% 90% at 15% 0%, #000 0%, transparent 75%);
+            mask-image: radial-gradient(120% 90% at 15% 0%, #000 0%, transparent 75%);
+    animation: stat-grid-drift 22s linear infinite;
+  }
+  @keyframes stat-grid-drift {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(34px, 34px, 0); }
+  }
+  .stat-panel__tag {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.75);
+    white-space: nowrap;
+  }
+  .stat-panel__tag--light {
+    border-color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.92);
+  }
+  .stat-panel__dot {
+    width: 7px; height: 7px;
+    border-radius: 9999px;
+    background: #F26522;
+    box-shadow: 0 0 0 0 rgba(242,101,34,0.55);
+    animation: stat-dot-pulse 2.4s ease-out infinite;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .stat-panel__dot--light {
+    background: #fff;
+    box-shadow: 0 0 0 0 rgba(255,255,255,0.6);
+    animation-name: stat-dot-pulse-light;
+  }
+  @keyframes stat-dot-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(242,101,34,0.55); }
+    70%  { box-shadow: 0 0 0 9px rgba(242,101,34,0); }
+    100% { box-shadow: 0 0 0 0 rgba(242,101,34,0); }
+  }
+  @keyframes stat-dot-pulse-light {
+    0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
+    70%  { box-shadow: 0 0 0 9px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  }
+  .stat-panel__num {
+    font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+  }
+  .stat-panel__num--sm {
+    font-size: clamp(1.35rem, 2.2vw, 2rem);
+    letter-spacing: -0.04em;
+  }
+  .stat-panel__cap {
+    margin-top: 8px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.62);
+  }
+  .stat-panel__cap--light {
+    margin-top: 4px;
+    color: rgba(255,255,255,0.85);
+    font-size: 11.5px;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  @media (max-width: 400px) {
+    .stat-grid { gap: 8px; }
+  }
+
+  /* ────────────────────────────────────────────────────────
+     BRIEF FORM — "Hablemos del proyecto"
+     Without JS every step is visible and it submits as one
+     long form; JS upgrades it to a wizard.
+     ──────────────────────────────────────────────────────── */
+  .hp-field {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px; height: 1px;
+    overflow: hidden;
+  }
+
+  /* Shell: sticky step rail + form column */
+  .brief-shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  @media (min-width: 1024px) {
+    .brief-shell {
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 56px;
+      padding: 0 32px;
+    }
+  }
+  .brief-main { min-width: 0; }
+
+  .brief-rail { display: none; }
+  @media (min-width: 1024px) {
+    .brief-rail { display: block; }
+    .brief-rail__inner { position: sticky; top: 104px; }
+  }
+  .brief-rail__list {
+    list-style: none;
+    margin: 0 0 26px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .brief-rail__item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    color: var(--ink-quiet, rgba(15,15,20,0.40));
+    transition: color .3s ease, background-color .3s ease;
+  }
+  .brief-rail__item.is-active {
+    color: var(--ink);
+    background: rgba(17,17,17,0.04);
+    font-weight: 600;
+  }
+  .brief-rail__item.is-done { color: var(--ink-muted); }
+  .brief-rail__bullet {
+    flex-shrink: 0;
+    width: 21px; height: 21px;
+    border-radius: 9999px;
+    border: 1.5px solid currentColor;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+  }
+  .brief-rail__item.is-active .brief-rail__bullet {
+    background: #F26522;
+    border-color: #F26522;
+    color: #fff;
+  }
+  .brief-rail__item.is-done .brief-rail__bullet {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .brief-rail__bullet svg { width: 11px; height: 11px; }
+  .brief-rail__trust {
+    padding-top: 20px;
+    border-top: 1px solid rgba(17,17,17,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .brief-rail__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--ink-muted);
+  }
+  .brief-rail__trust-item svg { flex-shrink: 0; color: var(--ink-quiet, rgba(15,15,20,0.40)); }
+
+  /* Currency toggle */
+  .brief-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .brief-cur {
+    display: inline-flex;
+    padding: 3px;
+    border-radius: 9999px;
+    background: rgba(17,17,17,0.05);
+    border: 1px solid rgba(17,17,17,0.07);
+  }
+  .brief-cur__btn {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 5px 13px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: background-color .25s ease, color .25s ease, box-shadow .25s ease;
+  }
+  .brief-cur__btn.is-active {
+    background: #fff;
+    color: var(--ink);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .brief-cur__btn:focus-visible { outline: 2px solid #F26522; outline-offset: 2px; }
+
+  .brief-fx {
+    margin-top: 10px;
+    font-size: 11.5px;
+    line-height: 1.55;
+    color: var(--ink-quiet, rgba(15,15,20,0.40));
+  }
+  .brief-progress { margin-bottom: 34px; }
+  .brief-progress__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .brief-progress__count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .brief-progress__pct {
+    font-size: 11px;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    color: var(--ink-quiet, rgba(15,15,20,0.40));
+    font-variant-numeric: tabular-nums;
+  }
+  .brief-progress__bar {
+    height: 3px;
+    border-radius: 9999px;
+    background: rgba(17,17,17,0.08);
+    overflow: hidden;
+  }
+  .brief-progress__fill {
+    display: block;
+    height: 100%;
+    width: 25%;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #F26522, #FF8A4C);
+    transition: width .5s var(--ease-axion, cubic-bezier(.25,.1,.25,1));
+  }
+  .brief-progress__steps {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .brief-progress__step {
+    font-size: 11px;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-quiet, rgba(15,15,20,0.40));
+    transition: color .3s ease;
+    white-space: nowrap;
+  }
+  .brief-progress__step.is-active { color: #F26522; }
+  .brief-progress__step.is-done   { color: var(--ink-muted); }
+  @media (max-width: 640px) {
+    /* Labels don't fit on a phone — the bar + "Paso n de 4" carry it. */
+    .brief-progress__step { display: none; }
+    .brief-progress__step.is-active { display: block; }
+  }
+  @media (min-width: 1024px) {
+    /* The sticky rail already names the steps — this row would just repeat it.
+       Scoped through the parent so it beats the earlier `display:flex`. */
+    .brief-progress .brief-progress__steps { display: none; }
+  }
+
+  .brief-step {
+    border: 0;
+    padding: 0;
+    margin: 0 0 40px;
+    min-width: 0; /* fieldset defaults to min-content — breaks grid children */
+  }
+  .brief-step.is-hidden { display: none; }
+  .brief-step__legend {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 0;
+    margin-bottom: 22px;
+  }
+  .brief-step__num {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 9999px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .brief-step__title {
+    display: block;
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .brief-step__hint {
+    display: block;
+    margin-top: 3px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* Service picker */
+  .brief-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .brief-card { position: relative; display: block; cursor: pointer; }
+  .brief-card input {
+    position: absolute;
+    opacity: 0;
+    width: 1px; height: 1px;
+  }
+  .brief-card__box {
+    display: block;
+    height: 100%;
+    padding: 16px 16px 16px 44px;
+    border-radius: 14px;
+    border: 1px solid rgba(17,17,17,0.10);
+    background: #fff;
+    transition: border-color .25s ease, background-color .25s ease, transform .25s var(--ease-axion, cubic-bezier(.25,.1,.25,1)), box-shadow .25s ease;
+  }
+  .brief-card:hover .brief-card__box {
+    border-color: rgba(17,17,17,0.24);
+    transform: translateY(-2px);
+  }
+  .brief-card input:checked + .brief-card__box {
+    border-color: #F26522;
+    background: #FFF7F3;
+    box-shadow: 0 0 0 1px #F26522 inset;
+  }
+  .brief-card input:focus-visible + .brief-card__box {
+    outline: 2px solid #F26522;
+    outline-offset: 2px;
+  }
+  .brief-card__tick {
+    position: absolute;
+    top: 17px; left: 15px;
+    width: 18px; height: 18px;
+    border-radius: 6px;
+    border: 1.5px solid rgba(17,17,17,0.22);
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: background-color .2s ease, border-color .2s ease;
+  }
+  .brief-card__tick svg { width: 11px; height: 11px; opacity: 0; transition: opacity .2s ease; }
+  .brief-card input:checked + .brief-card__box .brief-card__tick {
+    background: #F26522;
+    border-color: #F26522;
+  }
+  .brief-card input:checked + .brief-card__box .brief-card__tick svg { opacity: 1; }
+  .brief-card__label {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .brief-card__desc {
+    display: block;
+    margin-top: 4px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+
+  /* Chips (radios) */
+  .brief-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .brief-chip { position: relative; cursor: pointer; }
+  .brief-chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  /* Direct child only: budget chips nest per-currency spans inside the pill,
+     and those must stay plain text (and must honour [hidden]). */
+  .brief-chip > span {
+    display: inline-block;
+    padding: 9px 15px;
+    border-radius: 9999px;
+    border: 1px solid rgba(17,17,17,0.12);
+    background: #fff;
+    font-size: 13.5px;
+    color: var(--ink-soft, var(--ink));
+    transition: all .22s ease;
+    white-space: nowrap;
+  }
+  .brief-chip:hover > span { border-color: rgba(17,17,17,0.30); }
+  .brief-chip input:checked + span {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .brief-chip input:focus-visible + span {
+    outline: 2px solid #F26522;
+    outline-offset: 2px;
+  }
+
+  /* Fields */
+  .brief-field { margin-bottom: 20px; }
+  .brief-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0 16px;
+  }
+  .brief-label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 7px;
+  }
+  .brief-label .req { color: #F26522; }
+  .brief-optional {
+    font-weight: 400;
+    font-size: 11.5px;
+    color: var(--ink-quiet, rgba(15,15,20,0.40));
+    margin-left: 4px;
+  }
+  .brief-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(17,17,17,0.12);
+    background: #fff;
+    font-size: 15px; /* >=16px avoids iOS zoom; 15 + no zoom via viewport is fine */
+    line-height: 1.55;
+    color: var(--ink);
+    transition: border-color .2s ease, box-shadow .2s ease;
+    font-family: inherit;
+    resize: vertical;
+  }
+  .brief-input::placeholder { color: rgba(15,15,20,0.34); }
+  .brief-input:focus {
+    outline: none;
+    border-color: #F26522;
+    box-shadow: 0 0 0 3px rgba(242,101,34,0.14);
+  }
+  .brief-input.is-invalid {
+    border-color: #DC2626;
+    box-shadow: 0 0 0 3px rgba(220,38,38,0.10);
+  }
+  @media (max-width: 640px) {
+    /* 16px is the threshold below which iOS Safari zooms on focus */
+    .brief-input { font-size: 16px; }
+  }
+
+  .brief-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .brief-hint { font-size: 12px; color: var(--ink-muted); }
+  .brief-err  { font-size: 12px; color: #DC2626; margin-top: 6px; }
+  .brief-meta .brief-err { margin-top: 0; }
+  .brief-count {
+    font-size: 11px;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    color: var(--ink-quiet, rgba(15,15,20,0.40));
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .brief-count.is-near { color: #F26522; }
+
+  .brief-privacy {
+    margin-top: 18px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+  .brief-privacy a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+
+  .brief-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #991B1B;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .brief-alert svg { flex-shrink: 0; margin-top: 2px; }
+
+  /* Nav */
+  .brief-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(17,17,17,0.08);
+  }
+  .brief-nav__spacer { flex: 1; }
+  .brief-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform .2s var(--ease-axion, cubic-bezier(.25,.1,.25,1)), background-color .2s ease, opacity .2s ease;
+    font-family: inherit;
+  }
+  /* An author `display` beats the UA's [hidden]{display:none} — without this
+     the wizard shows Atrás/Continuar/Enviar all at once. */
+  .brief-btn[hidden] { display: none; }
+  .brief-btn:active { transform: scale(.98); }
+  .brief-btn--primary { background: #F26522; color: #fff; }
+  .brief-btn--primary:hover { background: #DA5416; }
+  .brief-btn--ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: rgba(17,17,17,0.14);
+  }
+  .brief-btn--ghost:hover { background: rgba(17,17,17,0.04); }
+  .brief-btn[disabled] { opacity: .6; cursor: not-allowed; }
+  .brief-btn:focus-visible { outline: 2px solid #F26522; outline-offset: 2px; }
+  @media (max-width: 480px) {
+    .brief-btn { flex: 1; }
+    .brief-nav__spacer { display: none; }
+  }
+
+  /* Step transition */
+  .brief-step.is-entering {
+    animation: brief-step-in .45s var(--ease-axion, cubic-bezier(.25,.1,.25,1)) both;
+  }
+  @keyframes brief-step-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Success */
+  .brief-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px; height: 72px;
+    border-radius: 9999px;
+    background: #F26522;
+    color: #fff;
+    box-shadow: 0 12px 34px -10px rgba(242,101,34,0.7);
+    animation: brief-pop .5s var(--ease-axion, cubic-bezier(.25,.1,.25,1)) both;
+  }
+  .brief-check svg { width: 34px; height: 34px; }
+  .brief-check__path {
+    stroke-dasharray: 30;
+    stroke-dashoffset: 30;
+    animation: brief-draw .45s ease .3s forwards;
+  }
+  @keyframes brief-pop {
+    from { opacity: 0; transform: scale(.7); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes brief-draw { to { stroke-dashoffset: 0; } }
+
+  .brief-ref {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 9px 9px 16px;
+    border-radius: 9999px;
+    background: #fff;
+    border: 1px solid rgba(17,17,17,0.10);
+  }
+  .brief-ref__label { font-size: 12px; color: var(--ink-muted); }
+  .brief-ref__code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    color: var(--ink);
+    background: rgba(17,17,17,0.05);
+    padding: 5px 12px;
+    border-radius: 9999px;
+  }
+
   .img-block {
     border-radius: 16px;
     overflow: hidden;
@@ -981,7 +1699,42 @@ body.modal-open { overflow: hidden; }
   color: var(--ink-soft);
   cursor: pointer;
   transition: all 0.2s var(--ease-axion);
+  text-decoration: none; /* also used on <a> in the leads filter */
+  white-space: nowrap;
 }
+
+/* ── Leads (admin) ───────────────────────────────────────── */
+.lead-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+.lead-badge--nuevo      { background: #FFF1E9; color: #C2410C; }
+.lead-badge--contactado { background: #EFF6FF; color: #1D4ED8; }
+.lead-badge--propuesta  { background: #F5F3FF; color: #6D28D9; }
+.lead-badge--ganado     { background: #ECFDF5; color: #047857; }
+.lead-badge--perdido    { background: #F5F5F4; color: #78716C; }
+
+.lead-new-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 9999px;
+  background: #F26522;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.lead-mail {
+  font-size: 12px;
+  font-weight: 600;
+}
+.lead-mail.is-ok   { color: #047857; }
+.lead-mail.is-fail { color: #DC2626; }
 .filter-pill:hover { border-color: var(--orange); color: var(--ink); }
 .filter-pill.is-active {
   background: var(--ink);
@@ -1141,5 +1894,11 @@ html { scroll-behavior: smooth; }
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
+  }
+  /* The screenshot pan would snap instead of easing — drop it entirely. */
+  .case-card:hover .case-shot img,
+  .case-card:hover .case-shot video,
+  .case-card:hover .case-card__media {
+    transform: none !important;
   }
 }

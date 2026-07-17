@@ -93,6 +93,8 @@ class AdminController
             'categoriesCount'   => Category::count(),
             'recentPosts'       => array_slice(Post::allAdmin(), 0, 6),
             'recentProjects'    => array_slice(Project::allAdmin(), 0, 6),
+            'newLeads'          => Lead::count('nuevo'),
+            'recentLeads'       => array_slice(Lead::all(), 0, 5),
         ];
         render_admin('dashboard', $data, [
             'adminTitle' => 'Dashboard',

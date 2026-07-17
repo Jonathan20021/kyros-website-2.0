@@ -1,9 +1,9 @@
 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8" data-fluid-stagger>
     <?php
     $stats = [
-        ['Proyectos publicados', $publishedProjects, 'briefcase', '#F26522', url('/admin/projects')],
-        ['Posts publicados',     $publishedPosts,    'message',   '#4F46E5', url('/admin/posts')],
-        ['Borradores',           $drafts,            'palette',   '#7C3AED', url('/admin/posts')],
+        ['Solicitudes nuevas',   $newLeads ?? 0,     'message',   '#F26522', url('/admin/leads?status=nuevo')],
+        ['Proyectos publicados', $publishedProjects, 'briefcase', '#4F46E5', url('/admin/projects')],
+        ['Posts publicados',     $publishedPosts,    'palette',   '#7C3AED', url('/admin/posts')],
         ['Categorías',           $categoriesCount,   'layers',    '#06B6D4', url('/admin/categories')],
     ];
     foreach ($stats as [$lbl, $val, $ic, $col, $href]):
@@ -21,6 +21,32 @@
             <div class="mt-3 text-[12px]" style="color: var(--ink-muted);">Ver detalle →</div>
         </a>
     <?php endforeach; ?>
+</div>
+
+<!-- Recent leads -->
+<div class="admin-card mb-5">
+    <div class="flex items-center justify-between mb-5">
+        <h2 class="font-medium text-[16px]" style="color: var(--ink);">Últimas solicitudes</h2>
+        <a href="<?= url('/admin/leads') ?>" class="text-[12px] font-medium text-[#F26522] hover:underline">Ver todas →</a>
+    </div>
+    <?php if (empty($recentLeads)): ?>
+        <p class="text-[14px]" style="color: var(--ink-muted);">Aún no hay solicitudes desde "Hablemos del proyecto".</p>
+    <?php else: ?>
+        <ul class="space-y-1">
+            <?php foreach ($recentLeads as $l): ?>
+                <li class="flex items-center gap-3 py-2.5 border-b border-[rgba(17,17,17,0.04)] last:border-0">
+                    <span class="lead-badge lead-badge--<?= e($l['status']) ?>"><?= e($l['status']) ?></span>
+                    <div class="flex-1 min-w-0">
+                        <a href="<?= url('/admin/leads/' . $l['id']) ?>" class="text-[14px] font-medium truncate block hover:text-[#F26522]" style="color: var(--ink);">
+                            <?= e($l['name']) ?><?= $l['company'] ? ' · ' . e($l['company']) : '' ?>
+                        </a>
+                        <span class="text-[12px]" style="color: var(--ink-muted);"><?= e($l['ref']) ?></span>
+                    </div>
+                    <span class="text-[12px] flex-shrink-0" style="color: var(--ink-muted);"><?= e(date('d/m/Y', strtotime((string) $l['created_at']))) ?></span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 </div>
 
 <div class="grid lg:grid-cols-2 gap-5" data-fluid-stagger>

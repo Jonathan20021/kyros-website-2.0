@@ -244,7 +244,7 @@
     <?php $u = auth_user(); ?>
     <aside class="admin-aside" id="admin-aside">
         <a href="<?= url('/admin') ?>" class="admin-logo" style="padding-top: 0; padding-bottom: 14px; gap: 6px;">
-            <img src="<?= asset('img/logo.png') ?>" alt="KYROS Solutions" style="height: 60px; width: auto; max-width: 170px; object-fit: contain; margin: -10px 0;">
+            <img src="<?= asset('img/logo.png') ?>" alt="KYROS Solutions" style="height: 24px; width: auto;">
             <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-[0.16em] self-center" style="background: var(--orange); color: #fff;">Admin</span>
         </a>
 
@@ -253,6 +253,7 @@
         $items = [
             'GESTIÓN' => [
                 ['/admin',            'Dashboard',  'sparkles'],
+                ['/admin/leads',      'Solicitudes','message'],
                 ['/admin/projects',   'Proyectos',  'briefcase'],
             ],
             'BLOG' => [

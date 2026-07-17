@@ -149,6 +149,38 @@ class Database
         $pdo->exec($sql);
 
         $sql = <<<'SQL'
+        CREATE TABLE IF NOT EXISTS leads (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            ref VARCHAR(20) NOT NULL UNIQUE,
+            name VARCHAR(120) NOT NULL,
+            email VARCHAR(180) NOT NULL,
+            company VARCHAR(160) NULL,
+            phone VARCHAR(40) NULL,
+            services VARCHAR(255) NULL,
+            project_type VARCHAR(80) NULL,
+            description TEXT NULL,
+            goals TEXT NULL,
+            features TEXT NULL,
+            has_existing VARCHAR(40) NULL,
+            existing_url VARCHAR(500) NULL,
+            budget VARCHAR(60) NULL,
+            timeline VARCHAR(60) NULL,
+            heard_from VARCHAR(80) NULL,
+            status ENUM('nuevo','contactado','propuesta','ganado','perdido') DEFAULT 'nuevo',
+            admin_notes TEXT NULL,
+            ip VARCHAR(60) NULL,
+            user_agent VARCHAR(255) NULL,
+            mail_admin_ok TINYINT DEFAULT 0,
+            mail_client_ok TINYINT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX idx_status (status),
+            INDEX idx_created (created_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        SQL;
+        $pdo->exec($sql);
+
+        $sql = <<<'SQL'
         CREATE TABLE IF NOT EXISTS media (
             id INT AUTO_INCREMENT PRIMARY KEY,
             filename VARCHAR(255) NOT NULL,

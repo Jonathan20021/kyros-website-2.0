@@ -14,7 +14,7 @@
             </div>
             <div class="lg:col-span-4 lg:text-right">
                 <div class="flex flex-col lg:items-end gap-3">
-                    <a href="<?= url('/contact') ?>" class="btn-orange group">
+                    <a href="<?= url('/hablemos') ?>" class="btn-orange group">
                         <span class="text-roll">
                             <span class="text-roll__inner">
                                 <span>Iniciar proyecto</span>
