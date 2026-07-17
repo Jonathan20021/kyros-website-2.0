@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title><?= e($title ?? 'KYROS Admin') ?></title>
-    <link rel="icon" type="image/svg+xml" href="<?= asset('img/favicon.svg') ?>">
+    <link rel="icon" href="<?= asset('img/favicon.ico') ?>" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= asset('img/favicon-32.png') ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= asset('img/apple-touch-icon.png') ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&display=swap">

@@ -74,10 +74,14 @@ $homeFaqs = [
     <meta name="geo.position" content="18.4861;-69.9312">
     <meta name="ICBM" content="18.4861, -69.9312">
 
-    <!-- Favicons -->
-    <link rel="icon" type="image/svg+xml" href="<?= asset('img/favicon.svg') ?>">
-    <link rel="mask-icon" href="<?= asset('img/favicon.svg') ?>" color="#4F46E5">
-    <link rel="apple-touch-icon" href="<?= asset('img/favicon.svg') ?>">
+    <!-- Favicons — the KYROS hexagon mark, white on brand navy so it stays
+         legible on both light and dark browser tabs. -->
+    <link rel="icon" href="<?= asset('img/favicon.ico') ?>" sizes="any">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= asset('img/favicon-16.png') ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= asset('img/favicon-32.png') ?>">
+    <link rel="icon" type="image/png" sizes="48x48" href="<?= asset('img/favicon-48.png') ?>">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= asset('img/icon-192.png') ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= asset('img/apple-touch-icon.png') ?>">
 
     <!-- Performance hints -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
