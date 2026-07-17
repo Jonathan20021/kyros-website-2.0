@@ -49,6 +49,29 @@
     }
   }
 
+  /* ── Hero mouse parallax ────────────────────────────────────
+     Sets --pxr/--pyr (-1..1); the CSS transition does the smoothing, so
+     there's no rAF loop. Pointer-fine only: the hero animations are already
+     disabled on touch/mobile for GPU reasons. */
+  if (!REDUCE && matchMedia('(pointer: fine)').matches) {
+    const chroma = document.querySelector('.hero-canvas__chroma');
+    const hero   = document.getElementById('hero');
+    if (chroma && hero) {
+      let queued = false, px = 0, py = 0;
+      window.addEventListener('mousemove', (e) => {
+        px = (e.clientX / window.innerWidth) * 2 - 1;
+        py = (e.clientY / window.innerHeight) * 2 - 1;
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          chroma.style.setProperty('--pxr', px.toFixed(3));
+          chroma.style.setProperty('--pyr', py.toFixed(3));
+          queued = false;
+        });
+      }, { passive: true });
+    }
+  }
+
   /* ── Image fade-in on load (works even if JS partial fails) ── */
   document.querySelectorAll('img[data-fade]').forEach(img => {
     if (img.complete && img.naturalWidth > 0) {

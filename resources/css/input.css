@@ -119,7 +119,11 @@
   .hero-canvas__chroma {
     position: absolute;
     inset: 0;
-    overflow: hidden;
+    /* No overflow clip here: .hero-canvas already clips, and clipping at this
+       level would show a hard edge once the parallax shifts the layer. */
+    transform: translate3d(calc(var(--pxr) * 24px), calc(var(--pyr) * 24px), 0);
+    transition: transform .7s var(--ease-out, cubic-bezier(.16,1,.3,1));
+    will-change: transform;
   }
   .hero-canvas__chroma::before,
   .hero-canvas__chroma::after {
@@ -133,26 +137,63 @@
     pointer-events: none;
   }
   .hero-canvas__chroma::before {
-    background: radial-gradient(circle, rgba(242, 101, 34, 0.45) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(242, 101, 34, 0.58) 0%, transparent 60%);
     top: -10%;
     left: -10%;
-    animation: chroma-drift-a 22s var(--ease-axion) infinite alternate;
+    animation: chroma-drift-a 16s var(--ease-axion) infinite alternate;
   }
   .hero-canvas__chroma::after {
-    background: radial-gradient(circle, rgba(242, 101, 34, 0.30) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(242, 101, 34, 0.42) 0%, transparent 65%);
     bottom: -20%;
     right: -15%;
-    animation: chroma-drift-b 28s var(--ease-axion) infinite alternate;
+    animation: chroma-drift-b 20s var(--ease-axion) infinite alternate;
   }
+  /* Opacity rides along with the drift so the colour breathes instead of
+     sitting flat — that flatness is what read as "dull". */
   @keyframes chroma-drift-a {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(20vw, 8vh) scale(1.15); }
-    100% { transform: translate(-10vw, 15vh) scale(0.95); }
+    0%   { transform: translate(0, 0) scale(1);      opacity: .85; }
+    50%  { transform: translate(22vw, 9vh) scale(1.2);  opacity: 1; }
+    100% { transform: translate(-12vw, 16vh) scale(0.92); opacity: .8; }
   }
   @keyframes chroma-drift-b {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(-15vw, -10vh) scale(1.1); }
-    100% { transform: translate(10vw, -5vh) scale(0.92); }
+    0%   { transform: translate(0, 0) scale(1);      opacity: .75; }
+    50%  { transform: translate(-17vw, -11vh) scale(1.15); opacity: 1; }
+    100% { transform: translate(12vw, -6vh) scale(0.9);  opacity: .8; }
+  }
+
+  /* Layer 2.5 — Network grid (canvas, drawn by kyros-hero-grid.js).
+     Sits above the colour wash so the lattice reads, below grain/fluted.
+     Masked toward the headline so it never fights the type. */
+  .hero-canvas__grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.9;
+    -webkit-mask-image: radial-gradient(120% 100% at 78% 42%, #000 22%, rgba(0,0,0,0.55) 52%, transparent 88%);
+            mask-image: radial-gradient(120% 100% at 78% 42%, #000 22%, rgba(0,0,0,0.55) 52%, transparent 88%);
+    animation: hero-grid-in 1.6s var(--ease-out, cubic-bezier(.16,1,.3,1)) both;
+    animation-delay: .35s;
+  }
+  @keyframes hero-grid-in {
+    from { opacity: 0; transform: scale(1.04); }
+    to   { opacity: .9; transform: scale(1); }
+  }
+  /* Phones run it too. The canvas is cheap (a cached blit + a few strokes) —
+     unlike the blur/blend layers below, which stay disabled on mobile. The
+     mask is re-aimed because the phone hero is text-dense edge to edge, so
+     the lattice is pulled toward the empty top-right and kept fainter. */
+  @media (max-width: 1023px), (pointer: coarse) {
+    .hero-canvas__grid {
+      opacity: 0.75;
+      -webkit-mask-image: radial-gradient(125% 75% at 82% 26%, #000 0%, rgba(0,0,0,0.5) 46%, transparent 82%);
+              mask-image: radial-gradient(125% 75% at 82% 26%, #000 0%, rgba(0,0,0,0.5) 46%, transparent 82%);
+    }
+    @keyframes hero-grid-in {
+      from { opacity: 0; transform: scale(1.04); }
+      to   { opacity: .75; transform: scale(1); }
+    }
   }
 
   /* Layer 3 — FilmGrain: SVG noise overlay */
@@ -198,6 +239,116 @@
     .hero-canvas__grain { display: none; }
     /* Also kill the background aurora and grain on body */
     body::before, body::after { display: none !important; }
+  }
+
+  /* ────────────────────────────────────────────────────────
+     HERO ENTRANCE — pure CSS so it never depends on JS.
+     Every animation ends at the visible state with `both`, and the global
+     prefers-reduced-motion rule collapses the duration, so the content is
+     always readable even if animation never runs.
+     ──────────────────────────────────────────────────────── */
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-in {
+    animation: hero-rise .9s var(--ease-out, cubic-bezier(.16,1,.3,1)) both;
+  }
+  .hero-in--1 { animation-delay: .10s; }
+  .hero-in--3 { animation-delay: .85s; }
+
+  /* Small pulsing dot before the eyebrow */
+  .hero-eyebrow-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 9999px;
+    background: var(--orange);
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: hero-dot 2.6s ease-out infinite;
+  }
+  @keyframes hero-dot {
+    0%   { box-shadow: 0 0 0 0 rgba(242,101,34,.6); }
+    70%  { box-shadow: 0 0 0 8px rgba(242,101,34,0); }
+    100% { box-shadow: 0 0 0 0 rgba(242,101,34,0); }
+  }
+
+  /* Headline: masked line reveal (sm+). Inline on phones so the natural
+     wrapping is untouched — a masked block there could overflow. */
+  .hero-line { display: inline; }
+  .hero-line__in { display: inline; }
+  .hero-title {
+    animation: hero-rise 1s var(--ease-out, cubic-bezier(.16,1,.3,1)) both;
+    animation-delay: .2s;
+  }
+  @media (min-width: 640px) {
+    .hero-title { animation: none; }
+    .hero-line {
+      display: block;
+      overflow: hidden;
+      /* room for descenders/accents so the mask never clips glyphs */
+      padding-bottom: .08em;
+      margin-bottom: -.08em;
+    }
+    .hero-line__in {
+      display: block;
+      animation: hero-line-up 1.05s var(--ease-out, cubic-bezier(.16,1,.3,1)) both;
+    }
+    .hero-line:nth-of-type(1) .hero-line__in { animation-delay: .18s; }
+    .hero-line:nth-of-type(2) .hero-line__in { animation-delay: .32s; }
+    .hero-line:nth-of-type(3) .hero-line__in { animation-delay: .46s; }
+  }
+  @keyframes hero-line-up {
+    from { transform: translateY(105%); }
+    to   { transform: translateY(0); }
+  }
+
+  /* Scroll cue */
+  .hero-scroll {
+    position: absolute;
+    z-index: 20;
+    right: 44px;
+    /* Clears the fixed chat bubble (≈56px tall, 24px inset) at bottom-right. */
+    bottom: 124px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    animation: hero-rise 1s var(--ease-out, cubic-bezier(.16,1,.3,1)) both;
+    animation-delay: 1.15s;
+  }
+  .hero-scroll__label {
+    font-size: 10px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    writing-mode: vertical-rl;
+  }
+  .hero-scroll__line {
+    width: 1px;
+    height: 54px;
+    background: rgba(17,17,17,0.16);
+    position: relative;
+    overflow: hidden;
+  }
+  /* A short bar travels down the rail, on a loop */
+  .hero-scroll__line::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 40%;
+    background: var(--orange);
+    animation: hero-scroll-run 2.2s ease-in-out infinite;
+  }
+  @keyframes hero-scroll-run {
+    0%   { transform: translateY(-100%); }
+    60%  { transform: translateY(250%); }
+    100% { transform: translateY(250%); }
+  }
+
+  /* Mouse parallax — JS sets --pxr/--pyr; defaults keep it inert without JS. */
+  .hero-canvas__chroma {
+    --pxr: 0;
+    --pyr: 0;
   }
 
   /* ── Italic serif accent (orange brand color by default) ─ */

@@ -455,5 +455,9 @@ $homeFaqs = [
         <!-- Brief wizard: progressive enhancement, only on that page -->
         <script src="<?= asset('js/kyros-brief.js') ?>" defer></script>
     <?php endif; ?>
+    <?php if (current_path() === '/'): ?>
+        <!-- Hero network grid: decorative, home only -->
+        <script src="<?= asset('js/kyros-hero-grid.js') ?>" defer></script>
+    <?php endif; ?>
 </body>
 </html>

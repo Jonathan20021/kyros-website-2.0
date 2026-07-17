@@ -8,6 +8,9 @@
     <!-- Animated shader-style background -->
     <div class="hero-canvas" aria-hidden="true">
         <div class="hero-canvas__chroma"></div>
+        <!-- Network grid: drawn by kyros-hero-grid.js. Purely decorative — if the
+             script never runs the canvas stays empty and the hero is unchanged. -->
+        <canvas id="hero-grid" class="hero-canvas__grid"></canvas>
         <div class="hero-canvas__fluted"></div>
         <div class="hero-canvas__grain"></div>
     </div>
@@ -18,18 +21,22 @@
     <!-- Hero content -->
     <div class="relative z-20 max-w-[1440px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-14 sm:pb-16 lg:pb-20">
 
-        <p class="text-[13px] sm:text-[14px] text-ink tracking-wide mb-5 sm:mb-8" style="color: var(--ink);">
-            KYROS Solutions
+        <p class="hero-in hero-in--1 text-[13px] sm:text-[14px] text-ink tracking-wide mb-5 sm:mb-8" style="color: var(--ink);">
+            <span class="hero-eyebrow-dot" aria-hidden="true"></span>KYROS Solutions
         </p>
 
-        <h1 class="font-medium leading-[1.08] tracking-[-0.03em] text-ink text-balance"
+        <!-- Each line masks up on load. Below sm the lines flow inline again so
+             the natural mobile wrapping is preserved. -->
+        <h1 class="hero-title font-medium leading-[1.08] tracking-[-0.03em] text-ink text-balance"
             style="color: var(--ink); font-size: clamp(1.75rem, 6vw, 4.2rem);">
-            Construimos tecnología
-            <br class="hidden sm:block"><span class="sm:hidden"> </span>para empresas que
-            <br class="hidden sm:block"><span class="sm:hidden"> </span>no pueden permitirse fallar.
+            <span class="hero-line"><span class="hero-line__in">Construimos tecnología</span></span>
+            <span class="sm:hidden"> </span>
+            <span class="hero-line"><span class="hero-line__in">para empresas que</span></span>
+            <span class="sm:hidden"> </span>
+            <span class="hero-line"><span class="hero-line__in">no pueden permitirse fallar.</span></span>
         </h1>
 
-        <div class="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center">
+        <div class="hero-in hero-in--3 mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center">
 
             <!-- Orange CTA with text-roll -->
             <a href="<?= url('/hablemos') ?>" class="btn-orange group">
@@ -52,6 +59,12 @@
             </div>
         </div>
     </div>
+
+    <!-- Scroll cue — desktop only, where the hero fills the viewport -->
+    <a href="#about" class="hero-scroll hidden lg:flex" aria-label="Ver más">
+        <span class="hero-scroll__label">Scroll</span>
+        <span class="hero-scroll__line" aria-hidden="true"></span>
+    </a>
 </section>
 
 <!-- ════════════════════════════════════════════════════════════
