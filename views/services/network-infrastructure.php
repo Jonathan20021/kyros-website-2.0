@@ -2,6 +2,7 @@
 $service = [
     'eyebrow' => 'Infraestructura de Redes',
     'icon'    => 'wifi',
+    'anim'    => 'network',
     'title'   => 'Redes empresariales <span class="text-italic-serif text-grad-ember">de alto rendimiento</span>.',
     'intro'   => 'Diseñamos, instalamos y administramos la red que tu empresa necesita: cableado certificado, WiFi de alta densidad, firewalls, segmentación, VPN y enlaces dedicados con la confiabilidad que tu operación exige.',
     'hero_metrics' => [
@@ -40,6 +41,7 @@ $service = [
         ['¿Cubren oficinas en distintas ciudades o países?', 'Sí. Diseñamos topologías multi-sitio con VPN, SD-WAN o MPLS y operamos remotamente con visitas on-site puntuales.'],
     ],
     'related' => [
+        ['slug' => 'social-media', 'icon' => 'share', 'title' => 'Redes Sociales'],
         ['slug' => 'cybersecurity', 'icon' => 'shield', 'title' => 'Ciberseguridad'],
         ['slug' => 'technical-support', 'icon' => 'headset', 'title' => 'Soporte & Helpdesk'],
         ['slug' => 'software-development', 'icon' => 'code', 'title' => 'Desarrollo de Software'],

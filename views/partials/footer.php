@@ -54,6 +54,8 @@
                     <li><a href="<?= url('/services/cybersecurity') ?>" class="text-[14px] hover:text-[var(--orange)] transition-colors" style="color: var(--ink-soft);">Ciberseguridad</a></li>
                     <li><a href="<?= url('/services/technical-support') ?>" class="text-[14px] hover:text-[var(--orange)] transition-colors" style="color: var(--ink-soft);">Soporte 24/7</a></li>
                     <li><a href="<?= url('/services/network-infrastructure') ?>" class="text-[14px] hover:text-[var(--orange)] transition-colors" style="color: var(--ink-soft);">Infraestructura</a></li>
+                    <li><a href="<?= url('/services/social-media') ?>" class="text-[14px] hover:text-[var(--orange)] transition-colors" style="color: var(--ink-soft);">Redes Sociales</a></li>
+                    <li><a href="<?= url('/services/medical-websites') ?>" class="text-[14px] hover:text-[var(--orange)] transition-colors" style="color: var(--ink-soft);">Webs para Médicos</a></li>
                 </ul>
             </div>
             <div>

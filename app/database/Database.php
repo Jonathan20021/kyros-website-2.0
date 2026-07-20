@@ -180,6 +180,58 @@ class Database
         SQL;
         $pdo->exec($sql);
 
+        /* Requests coming from "Páginas web para médicos" (/mi-pagina-medica).
+           Kept apart from `leads`: this form collects the raw material of the
+           site itself (bio, trayectoria, consultorios, horarios, logo), not a
+           sales enquiry, and it follows a production pipeline of its own.
+           Variable-length parts (consultorios + their weekly schedules, redes)
+           are JSON so a doctor can add a third office without a migration. */
+        $sql = <<<'SQL'
+        CREATE TABLE IF NOT EXISTS medical_requests (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            ref VARCHAR(20) NOT NULL UNIQUE,
+            title_prefix VARCHAR(20) NULL,
+            full_name VARCHAR(160) NOT NULL,
+            specialty VARCHAR(120) NULL,
+            specialty_other VARCHAR(160) NULL,
+            subspecialty VARCHAR(200) NULL,
+            license VARCHAR(60) NULL,
+            years_experience VARCHAR(20) NULL,
+            email VARCHAR(180) NOT NULL,
+            phone VARCHAR(40) NOT NULL,
+            whatsapp VARCHAR(40) NULL,
+            city VARCHAR(120) NULL,
+            domain_status VARCHAR(40) NULL,
+            domain_name VARCHAR(180) NULL,
+            socials TEXT NULL,
+            bio TEXT NULL,
+            career TEXT NULL,
+            services_offered TEXT NULL,
+            insurances TEXT NULL,
+            languages VARCHAR(200) NULL,
+            logo_url VARCHAR(500) NULL,
+            portrait_url VARCHAR(500) NULL,
+            clinics TEXT NULL,
+            plan VARCHAR(40) NULL,
+            extras VARCHAR(500) NULL,
+            booking VARCHAR(40) NULL,
+            design_refs VARCHAR(500) NULL,
+            launch_when VARCHAR(40) NULL,
+            notes TEXT NULL,
+            status ENUM('nuevo','contactado','propuesta','en_produccion','publicado','perdido') DEFAULT 'nuevo',
+            admin_notes TEXT NULL,
+            ip VARCHAR(60) NULL,
+            user_agent VARCHAR(255) NULL,
+            mail_admin_ok TINYINT DEFAULT 0,
+            mail_client_ok TINYINT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX idx_med_status (status),
+            INDEX idx_med_created (created_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        SQL;
+        $pdo->exec($sql);
+
         $sql = <<<'SQL'
         CREATE TABLE IF NOT EXISTS media (
             id INT AUTO_INCREMENT PRIMARY KEY,

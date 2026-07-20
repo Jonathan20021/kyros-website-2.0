@@ -254,16 +254,20 @@ $statEquipo = function () { ?>
 
         <h2 class="font-medium leading-[1.12] tracking-[-0.02em] text-balance mb-10 sm:mb-14 lg:mb-16"
             style="color: var(--ink); font-size: clamp(1.5rem, 4vw, 3.2rem);">
-            Cuatro disciplinas,<br class="hidden sm:block"><span class="sm:hidden"> </span>un solo equipo responsable.
+            Seis disciplinas,<br class="hidden sm:block"><span class="sm:hidden"> </span>un solo equipo responsable.
         </h2>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6" data-fluid-stagger>
+        <?php /* Six services: 3 columns splits into two even rows. The old
+                 xl:grid-cols-5 would leave the sixth card orphaned on its own. */ ?>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" data-fluid-stagger>
             <?php
             $services = [
                 ['code',    'Desarrollo de software',    'Aplicaciones web, plataformas SaaS y sistemas empresariales con arquitectura moderna y entregas medibles.', '/services/software-development'],
                 ['shield',  'Ciberseguridad',            'Pentesting, hardening, monitoreo y respuesta ante incidentes con respuesta certificada.',                   '/services/cybersecurity'],
                 ['headset', 'Soporte 24/7',              'Mesa de ayuda con SLA contractual. Resolvemos en minutos, no en días.',                                     '/services/technical-support'],
                 ['wifi',    'Infraestructura de redes',  'Diseño y administración de redes empresariales: cableado certificado, WiFi 6, firewalls y VPN.',            '/services/network-infrastructure'],
+                ['share',   'Redes sociales',            'Estrategia, contenido, community management y campañas para empresas y marcas personales.',                 '/services/social-media'],
+                ['stethoscope', 'Webs para médicos',     'Sitios para médicos y centros de salud: perfil, consultorios, horarios y solicitud de citas.',              '/services/medical-websites'],
             ];
             foreach ($services as [$ic, $title, $desc, $link]):
             ?>

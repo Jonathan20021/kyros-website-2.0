@@ -2,6 +2,7 @@
 $service = [
     'eyebrow' => 'Soporte & Helpdesk',
     'icon'    => 'headset',
+    'anim'    => 'support',
     'title'   => 'Mesa de ayuda <span class="text-italic-serif text-grad-ember">24/7</span> que sí responde.',
     'intro'   => 'Soporte técnico profesional con SLA garantizado. Resolvemos en minutos, no en días. Personas reales atendiendo a tu equipo y tus clientes, con la trazabilidad de un sistema enterprise.',
     'hero_metrics' => [
@@ -39,6 +40,7 @@ $service = [
         ['¿Qué es KyDesk?', 'KyDesk es nuestra plataforma propia de helpdesk. Tus usuarios la usan para reportar incidencias y tu equipo directivo la usa para ver métricas en tiempo real.'],
     ],
     'related' => [
+        ['slug' => 'social-media', 'icon' => 'share', 'title' => 'Redes Sociales'],
         ['slug' => 'network-infrastructure', 'icon' => 'wifi', 'title' => 'Infraestructura de Redes'],
         ['slug' => 'cybersecurity', 'icon' => 'shield', 'title' => 'Ciberseguridad'],
         ['slug' => 'software-development', 'icon' => 'code', 'title' => 'Desarrollo de Software'],

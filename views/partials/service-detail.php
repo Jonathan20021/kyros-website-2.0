@@ -8,9 +8,12 @@ $bd = $service['color_bd'] ?? '#FED7B5';
 <!-- ════════════════════════════════════════════════════════════
      HERO STRIP
      ════════════════════════════════════════════════════════════ -->
-<section class="relative pt-32 sm:pt-36 pb-20 overflow-hidden bg-[#EFEFEF]">
+<section id="svc-hero" class="relative pt-32 sm:pt-36 pb-20 overflow-hidden bg-[#EFEFEF]">
     <div class="hero-canvas" aria-hidden="true">
         <div class="hero-canvas__chroma"></div>
+        <!-- Service-specific motion (code stream / radar / pulse / routing),
+             drawn by kyros-service-hero.js. Decorative; empty without JS. -->
+        <canvas id="svc-scene" class="svc-scene" data-scene="<?= e($service['anim'] ?? '') ?>"<?= !empty($service['accent_rgb']) ? ' data-accent="' . e($service['accent_rgb']) . '"' : '' ?>></canvas>
         <div class="hero-canvas__fluted"></div>
         <div class="hero-canvas__grain"></div>
     </div>
@@ -100,9 +103,9 @@ $bd = $service['color_bd'] ?? '#FED7B5';
             </div>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" data-fluid-stagger>
             <?php foreach ($service['features'] as $i => $f): ?>
-                <div class="rounded-2xl p-6 bg-white border border-[rgba(17,17,17,0.06)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
+                <div class="svc-feature rounded-2xl p-6 bg-white border border-[rgba(17,17,17,0.06)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all">
                     <span class="w-10 h-10 rounded-xl flex items-center justify-center mb-5" style="background: <?= e($bg) ?>; color: <?= e($fg) ?>; border: 1px solid <?= e($bd) ?>;">
                         <?= icon($f['icon'], 'w-5 h-5') ?>
                     </span>
@@ -135,7 +138,7 @@ $bd = $service['color_bd'] ?? '#FED7B5';
                     Documentación clara, código mantenible y handoff completo. Nada queda en cabezas de personas.
                 </p>
             </div>
-            <ul class="lg:col-span-7 grid sm:grid-cols-2 gap-3">
+            <ul class="lg:col-span-7 grid sm:grid-cols-2 gap-3" data-fluid-stagger>
                 <?php foreach ($service['deliverables'] as $d): ?>
                     <li class="flex items-start gap-3 p-4 rounded-xl bg-white border border-[rgba(17,17,17,0.06)] text-[14px]" style="color: var(--ink-soft);">
                         <span class="w-6 h-6 mt-0.5 rounded-full flex items-center justify-center flex-shrink-0" style="background: <?= e($bg) ?>; color: <?= e($fg) ?>;">
@@ -169,9 +172,9 @@ $bd = $service['color_bd'] ?? '#FED7B5';
             </div>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-fluid-stagger>
             <?php foreach ($service['process'] as $p): ?>
-                <div class="rounded-2xl p-6 bg-white border border-[rgba(17,17,17,0.06)] relative overflow-hidden">
+                <div class="svc-process rounded-2xl p-6 bg-white border border-[rgba(17,17,17,0.06)] relative overflow-hidden">
                     <span class="absolute top-4 right-5 text-[60px] font-medium tracking-[-0.04em] leading-none" style="color: <?= e($bg) ?>;"><?= e($p['num']) ?></span>
                     <div class="relative">
                         <span class="text-[10px] font-mono tracking-[0.22em] mb-2 block" style="color: <?= e($fg) ?>;">FASE <?= e($p['num']) ?></span>
@@ -207,7 +210,7 @@ $bd = $service['color_bd'] ?? '#FED7B5';
                     </p>
                 </div>
             </div>
-            <div class="lg:col-span-8 space-y-3">
+            <div class="lg:col-span-8 space-y-3" data-fluid-stagger>
                 <?php foreach ($service['faqs'] as [$q, $a]): ?>
                     <div data-faq class="faq-item">
                         <button data-faq-btn class="w-full flex items-center justify-between gap-4 p-5 text-left">

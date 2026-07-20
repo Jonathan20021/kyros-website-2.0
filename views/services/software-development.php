@@ -2,6 +2,7 @@
 $service = [
     'eyebrow' => 'Desarrollo de Software',
     'icon'    => 'code',
+    'anim'    => 'code',
     'title'   => 'Software <span class="text-italic-serif text-grad-ember">a medida</span> que mueve negocios.',
     'intro'   => 'Diseñamos y construimos aplicaciones web, plataformas SaaS y sistemas empresariales robustos, escalables y mantenibles. Desde el primer wireframe hasta el primer cliente en producción.',
     'hero_metrics' => [
@@ -41,6 +42,7 @@ $service = [
         ['¿Cómo manejan los cambios de alcance?', 'Trabajamos en sprints cortos justo para absorber cambios. Cada sprint comienza con priorización, así pivotamos sin caos.'],
     ],
     'related' => [
+        ['slug' => 'social-media', 'icon' => 'share', 'title' => 'Redes Sociales'],
         ['slug' => 'cybersecurity', 'icon' => 'shield', 'title' => 'Ciberseguridad'],
         ['slug' => 'technical-support', 'icon' => 'headset', 'title' => 'Soporte & Helpdesk'],
         ['slug' => 'network-infrastructure', 'icon' => 'wifi', 'title' => 'Infraestructura'],

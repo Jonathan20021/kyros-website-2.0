@@ -254,9 +254,10 @@
         $here = current_path();
         $items = [
             'GESTIÓN' => [
-                ['/admin',            'Dashboard',  'sparkles'],
-                ['/admin/leads',      'Solicitudes','message'],
-                ['/admin/projects',   'Proyectos',  'briefcase'],
+                ['/admin',            'Dashboard',    'sparkles'],
+                ['/admin/leads',      'Solicitudes',  'message'],
+                ['/admin/medicos',    'Webs médicas', 'stethoscope'],
+                ['/admin/projects',   'Proyectos',    'briefcase'],
             ],
             'BLOG' => [
                 ['/admin/posts',      'Posts',       'message'],

@@ -24,6 +24,7 @@ class BriefController
         'seguridad'  => ['Ciberseguridad',             'Pentesting, hardening, monitoreo y respuesta a incidentes.'],
         'redes'      => ['Infraestructura de redes',   'Cableado certificado, WiFi 6, firewalls y VPN.'],
         'soporte'    => ['Soporte 24/7',               'Mesa de ayuda con SLA contractual.'],
+        'social'     => ['Manejo de redes sociales',   'Contenido, community management y campañas para tu marca.'],
         'otro'       => ['Otro / no estoy seguro',     'Cuéntanos la necesidad y te orientamos.'],
     ];
 

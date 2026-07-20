@@ -2,6 +2,7 @@
 $service = [
     'eyebrow' => 'Ciberseguridad',
     'icon'    => 'shield',
+    'anim'    => 'security',
     'title'   => 'Defensa <span class="text-italic-serif text-grad-ember">proactiva</span> para tu empresa.',
     'intro'   => 'Auditorías técnicas, ethical hacking, hardening y monitoreo continuo. Identificamos y cerramos vulnerabilidades antes de que un atacante las encuentre.',
     'hero_metrics' => [
@@ -40,6 +41,7 @@ $service = [
         ['¿Pueden monitorear nuestra infraestructura 24/7?', 'Ofrecemos servicios de SOC con SIEM, detección de amenazas y respuesta activa con personal humano, no solo bots.'],
     ],
     'related' => [
+        ['slug' => 'social-media', 'icon' => 'share', 'title' => 'Redes Sociales'],
         ['slug' => 'software-development', 'icon' => 'code', 'title' => 'Desarrollo de Software'],
         ['slug' => 'network-infrastructure', 'icon' => 'wifi', 'title' => 'Infraestructura'],
         ['slug' => 'technical-support', 'icon' => 'headset', 'title' => 'Soporte & Helpdesk'],

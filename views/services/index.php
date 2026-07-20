@@ -16,7 +16,7 @@
                 <span class="section-badge__num">S</span>
                 <span class="section-badge__label">Servicios</span>
             </div>
-            <span class="text-[12px] font-mono" style="color: var(--ink-muted);">4 disciplinas · 1 equipo</span>
+            <span class="text-[12px] font-mono" style="color: var(--ink-muted);">6 disciplinas · 1 equipo</span>
         </div>
         <div class="grid lg:grid-cols-12 gap-10 items-end">
             <div class="lg:col-span-9">
@@ -27,7 +27,7 @@
             </div>
             <div class="lg:col-span-3">
                 <p class="text-[15px] sm:text-[16px] leading-[1.6]" style="color: var(--ink-soft);">
-                    Software, ciberseguridad, soporte y redes. Cuatro disciplinas, un solo equipo, una responsabilidad: que tu tecnología funcione.
+                    Software, ciberseguridad, soporte, redes, contenido y webs médicas. Seis disciplinas, un solo equipo, una responsabilidad: que tu tecnología funcione.
                 </p>
             </div>
         </div>
@@ -74,10 +74,26 @@
                     'desc' => 'Diseñamos, instalamos y administramos redes empresariales: cableado estructurado, WiFi de alta densidad, firewalls, VPN y enlaces dedicados.',
                     'bullets' => ['Cableado estructurado certificado', 'WiFi 6 de alta densidad', 'Firewalls y segmentación', 'Enlaces dedicados y VPN'],
                 ],
+                [
+                    'slug' => 'social-media', 'num' => '05', 'icon' => 'share',
+                    'fg' => '#DB2777', 'bg' => '#FDF2F8', 'bd' => '#FBCFE8',
+                    'title' => 'Redes Sociales', 'italic' => 'para tu marca',
+                    'tag' => 'Contenido · Community · Ads',
+                    'desc' => 'Manejamos la presencia digital de empresas y personas: estrategia, contenido, community management y campañas pagadas. Para que tu marca crezca y se vea profesional en cada plataforma.',
+                    'bullets' => ['Estrategia y calendario de contenido', 'Diseño, foto y video profesional', 'Community management diario', 'Campañas en Meta, TikTok y Google Ads'],
+                ],
+                [
+                    'slug' => 'medical-websites', 'num' => '06', 'icon' => 'stethoscope', 'is_new' => true,
+                    'fg' => '#0D9488', 'bg' => '#F0FDFA', 'bd' => '#99F6E4',
+                    'title' => 'Webs para', 'italic' => 'médicos',
+                    'tag' => 'Salud · Planes cerrados',
+                    'desc' => 'Sitios web para médicos, especialistas, odontólogos y centros de salud. Tu perfil profesional, tus consultorios, tus horarios y un botón para pedir cita. Con precio cerrado y entrega desde 7 días.',
+                    'bullets' => ['Perfil profesional y trayectoria', 'Consultorios, mapas y horarios', 'Solicitud de citas y WhatsApp', 'SEO local para tu especialidad'],
+                ],
             ];
             foreach ($services as $svc):
             ?>
-                <a href="<?= url('/services/' . $svc['slug']) ?>" class="group block rounded-2xl p-8 bg-white border border-[rgba(17,17,17,0.08)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-[rgba(17,17,17,0.14)] transition-all">
+                <a href="<?= url('/services/' . $svc['slug']) ?>" class="group block rounded-2xl p-8 bg-white border border-[rgba(17,17,17,0.08)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-[rgba(17,17,17,0.14)] transition-all <?= !empty($svc['wide']) ? 'lg:col-span-2' : '' ?>">
                     <div class="flex items-start justify-between mb-7">
                         <span class="w-14 h-14 rounded-2xl flex items-center justify-center" style="background: <?= e($svc['bg']) ?>; color: <?= e($svc['fg']) ?>; border: 1px solid <?= e($svc['bd']) ?>;">
                             <?= icon($svc['icon'], 'w-6 h-6') ?>
@@ -85,6 +101,9 @@
                         <div class="text-right">
                             <span class="block text-[11px] font-mono mb-1.5" style="color: var(--ink-muted);">[<?= e($svc['num']) ?>]</span>
                             <span class="pill"><?= e($svc['tag']) ?></span>
+                            <?php if (!empty($svc['is_new'])): ?>
+                                <span class="inline-block mt-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.12em]" style="background: <?= e($svc['fg']) ?>; color: #fff;">Nuevo</span>
+                            <?php endif; ?>
                         </div>
                     </div>
 

@@ -183,7 +183,9 @@ $homeFaqs = [
               {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Desarrollo de software a medida", "url": "<?= e(url('/services/software-development')) ?>"}},
               {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Ciberseguridad avanzada", "url": "<?= e(url('/services/cybersecurity')) ?>"}},
               {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Soporte técnico 24/7", "url": "<?= e(url('/services/technical-support')) ?>"}},
-              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Infraestructura de redes", "url": "<?= e(url('/services/network-infrastructure')) ?>"}}
+              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Infraestructura de redes", "url": "<?= e(url('/services/network-infrastructure')) ?>"}},
+              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Manejo de redes sociales", "url": "<?= e(url('/services/social-media')) ?>"}},
+              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Páginas web para médicos y especialistas", "url": "<?= e(url('/services/medical-websites')) ?>"}}
             ]
           }
         },
@@ -458,6 +460,13 @@ $homeFaqs = [
     <?php if (current_path() === '/'): ?>
         <!-- Hero network grid: decorative, home only -->
         <script src="<?= asset('js/kyros-hero-grid.js') ?>" defer></script>
+    <?php endif; ?>
+    <?php if (str_starts_with(current_path(), '/services/')): ?>
+        <!-- Service-specific hero scene: decorative, detail pages only -->
+        <script src="<?= asset('js/kyros-service-hero.js') ?>" defer></script>
+    <?php endif; ?>
+    <?php if (current_path() === '/mi-pagina-medica'): ?>
+        <script src="<?= asset('js/kyros-medical-form.js') ?>" defer></script>
     <?php endif; ?>
 </body>
 </html>

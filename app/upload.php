@@ -72,6 +72,92 @@ function upload_image(?array $file, ?string &$error = null): ?string
     return $base . "/assets/uploads/{$year}/{$month}/{$name}";
 }
 
+/**
+ * Upload from an *unauthenticated* form (doctor logo / portrait).
+ *
+ * Deliberately stricter than upload_image(), which only ever runs behind
+ * auth_require():
+ *   - No SVG. An SVG is a script container and these files are served from our
+ *     own origin, so accepting one from the public internet is stored XSS.
+ *   - getimagesize() must also agree it is a real raster image, not just a file
+ *     whose first bytes sniff as one.
+ *   - 5 MB cap: a phone photo of a logo is well under that.
+ *
+ * Returns a ROOT-RELATIVE path ("/assets/uploads/…"), not an absolute URL —
+ * upload_image() bakes in APP_URL, which breaks every local upload. Render it
+ * with med_asset_url().
+ */
+function upload_public_image(?array $file, ?string &$error = null): ?string
+{
+    if (!$file || ($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+    if (($file['error'] ?? 0) !== UPLOAD_ERR_OK) {
+        // INI_SIZE/FORM_SIZE is the one the user can actually act on.
+        $error = in_array($file['error'], [UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE], true)
+            ? 'La imagen supera el tamaño permitido (máx 5 MB).'
+            : 'No pudimos subir la imagen. Inténtalo de nuevo.';
+        return null;
+    }
+    if (($file['size'] ?? 0) > 5 * 1024 * 1024) {
+        $error = 'La imagen supera el tamaño permitido (máx 5 MB).';
+        return null;
+    }
+
+    $allowed = [
+        'image/jpeg' => 'jpg',
+        'image/png'  => 'png',
+        'image/webp' => 'webp',
+        'image/avif' => 'avif',
+    ];
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime  = $finfo->file($file['tmp_name']) ?: '';
+    if (!isset($allowed[$mime])) {
+        $error = 'Formato no admitido. Usa JPG, PNG o WEBP.';
+        return null;
+    }
+    if (@getimagesize($file['tmp_name']) === false) {
+        $error = 'El archivo no es una imagen válida.';
+        return null;
+    }
+
+    $year  = date('Y');
+    $month = date('m');
+    $dir   = base_path("assets/uploads/medicos/{$year}/{$month}");
+    if (!is_dir($dir) && !@mkdir($dir, 0775, true) && !is_dir($dir)) {
+        $error = 'No pudimos guardar la imagen.';
+        return null;
+    }
+
+    $name = bin2hex(random_bytes(10)) . '.' . $allowed[$mime];
+    if (!move_uploaded_file($file['tmp_name'], $dir . DIRECTORY_SEPARATOR . $name)) {
+        $error = 'No pudimos guardar la imagen.';
+        return null;
+    }
+
+    $path = "/assets/uploads/medicos/{$year}/{$month}/{$name}";
+
+    // Library record is a nicety, never a reason to fail the request.
+    try {
+        Database::pdo()->prepare(
+            "INSERT INTO media (filename, original_name, mime_type, size, url, uploaded_by) VALUES (?,?,?,?,?,NULL)"
+        )->execute([$name, $file['name'] ?? null, $mime, $file['size'] ?? null, $path]);
+    } catch (Throwable $e) {
+        // Non-critical.
+    }
+
+    return $path;
+}
+
+/** Render a stored asset path: relative paths get the current host prefixed. */
+function med_asset_url(?string $path): string
+{
+    $path = trim((string) $path);
+    if ($path === '') return '';
+    if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) return $path;
+    return url($path);
+}
+
 /** Slug generator — accent-folded kebab-case */
 function slugify(string $text): string
 {

@@ -61,6 +61,14 @@ $router->get('/services/network-infrastructure', fn() => render_view('services.n
     'title'       => 'Infraestructura de Redes · KYROS Solutions',
     'description' => 'Diseño, implementación y administración de redes empresariales seguras, escalables y de alto rendimiento.',
 ]));
+$router->get('/services/social-media', fn() => render_view('services.social-media', [], [
+    'title'       => 'Manejo de Redes Sociales · KYROS Solutions',
+    'description' => 'Estrategia, contenido, community management y campañas para empresas y marcas personales. Hacemos crecer tu presencia digital.',
+]));
+$router->get('/services/medical-websites', fn() => render_view('services.medical-websites', [], [
+    'title'       => 'Páginas Web para Médicos y Especialistas · KYROS Solutions',
+    'description' => 'Sitios web profesionales para médicos, odontólogos, psicólogos y centros de salud. Perfil, consultorios, horarios y solicitud de citas. Desde RD$12,900 y entrega en 7 días.',
+]));
 
 $router->get('/about',   fn() => render_view('about',   [], ['title' => 'Sobre Nosotros · KYROS Solutions', 'description' => 'Conoce al equipo y la misión detrás de KYROS Solutions.']));
 $router->get('/privacy', fn() => render_view('privacy', [], ['title' => 'Política de Privacidad · KYROS Solutions']));
@@ -72,6 +80,10 @@ $router->post('/contact', [ContactController::class, 'submit']);
 /* ── Project brief ("Hablemos del proyecto") ─────────────── */
 $router->get('/hablemos',  [BriefController::class, 'show']);
 $router->post('/hablemos', [BriefController::class, 'submit']);
+
+/* ── Doctor intake ("Páginas web para médicos") ──────────── */
+$router->get('/mi-pagina-medica',  [MedicalSiteController::class, 'show']);
+$router->post('/mi-pagina-medica', [MedicalSiteController::class, 'submit']);
 
 /* ── Public blog ──────────────────────────────────────────── */
 $router->get('/blog',                       [BlogController::class, 'index']);
@@ -118,6 +130,12 @@ $router->post('/admin/leads/{id}/status',    [LeadAdminController::class, 'updat
 $router->post('/admin/leads/{id}/notes',     [LeadAdminController::class, 'updateNotes']);
 $router->post('/admin/leads/{id}/delete',    [LeadAdminController::class, 'destroy']);
 
+$router->get('/admin/medicos',               [MedicalAdminController::class, 'index']);
+$router->get('/admin/medicos/{id}',          [MedicalAdminController::class, 'show']);
+$router->post('/admin/medicos/{id}/status',  [MedicalAdminController::class, 'updateStatus']);
+$router->post('/admin/medicos/{id}/notes',   [MedicalAdminController::class, 'updateNotes']);
+$router->post('/admin/medicos/{id}/delete',  [MedicalAdminController::class, 'destroy']);
+
 $router->get('/admin/settings',              [AdminController::class, 'settings']);
 $router->post('/admin/settings',             [AdminController::class, 'updateSettings']);
 
@@ -135,9 +153,12 @@ $router->get('/sitemap.xml', function () {
         ['/services/cybersecurity',            '0.8', 'monthly'],
         ['/services/technical-support',        '0.8', 'monthly'],
         ['/services/network-infrastructure',   '0.8', 'monthly'],
+        ['/services/social-media',             '0.8', 'monthly'],
+        ['/services/medical-websites',         '0.9', 'monthly'],
         ['/about',                             '0.7', 'monthly'],
         ['/contact',                           '0.7', 'monthly'],
         ['/hablemos',                          '0.9', 'monthly'],
+        ['/mi-pagina-medica',                  '0.8', 'monthly'],
     ];
     echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">' . "\n";
