@@ -23,6 +23,7 @@ class PostAdminController
             'post' => null,
             'isEdit' => false,
             'categories' => Category::all(),
+            'tagSuggest' => Post::distinctTags(),
         ], [
             'adminTitle' => 'Nuevo post',
             'adminSubtitle' => 'Editor de artículos',
@@ -64,6 +65,7 @@ class PostAdminController
             'post' => $post,
             'isEdit' => true,
             'categories' => Category::all(),
+            'tagSuggest' => Post::distinctTags(),
         ], [
             'adminTitle' => 'Editar: ' . $post['title'],
             'adminSubtitle' => 'Edita o publica el post',

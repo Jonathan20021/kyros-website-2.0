@@ -83,6 +83,41 @@ class Project
         Database::pdo()->prepare("DELETE FROM projects WHERE id = ?")->execute([$id]);
     }
 
+    /** Distinct non-empty categories across all projects, for the datalist. */
+    public static function distinctCategories(): array
+    {
+        $rows = Database::pdo()
+            ->query("SELECT DISTINCT category FROM projects WHERE category IS NOT NULL AND category <> '' ORDER BY category ASC")
+            ->fetchAll(PDO::FETCH_COLUMN);
+        return $rows ?: [];
+    }
+
+    /**
+     * Every tag ever used, de-duplicated case-insensitively, for the suggestion
+     * chips. Tags live comma-separated in one column, so they are split here
+     * rather than in the view.
+     *
+     * @return array<int,string>
+     */
+    public static function distinctTags(int $limit = 24): array
+    {
+        $rows = Database::pdo()
+            ->query("SELECT tags FROM projects WHERE tags IS NOT NULL AND tags <> ''")
+            ->fetchAll(PDO::FETCH_COLUMN);
+
+        $seen = [];
+        foreach ($rows as $csv) {
+            foreach (explode(',', (string) $csv) as $tag) {
+                $tag = trim($tag);
+                if ($tag === '') continue;
+                $key = mb_strtolower($tag);
+                if (!isset($seen[$key])) $seen[$key] = $tag;   // keep first-seen casing
+            }
+        }
+        ksort($seen);
+        return array_slice(array_values($seen), 0, $limit);
+    }
+
     public static function count(string $status = ''): int
     {
         if ($status) {

@@ -1,4 +1,12 @@
-<?php $p = $post ?? []; $selectedCatId = (int)($p['category_id'] ?? 0); ?>
+<?php
+$p = $post ?? [];
+$selectedCatId = (int)($p['category_id'] ?? 0);
+$tagSuggest = $tagSuggest ?? [];
+
+// "Extracto y SEO" starts collapsed on a new post — both fields auto-derive
+// from the title/content when empty, so they are never a blocker to publish.
+$hasSeo = !empty($p['excerpt']) || !empty($p['meta_title']) || !empty($p['meta_description']);
+?>
 
 <!-- Quill WYSIWYG -->
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
@@ -106,39 +114,43 @@
             <input type="hidden" name="reading_time" id="reading-time-input" value="<?= (int)($p['reading_time'] ?? 1) ?>">
         </div>
 
-        <!-- Excerpt metabox -->
-        <div class="metabox">
-            <div class="metabox__header">
-                <span class="metabox__title">Extracto</span>
-            </div>
-            <div class="metabox__body">
-                <textarea name="excerpt" rows="3" class="admin-textarea" maxlength="500" placeholder="Resumen del post para previews y SEO (opcional, máx 500 caracteres)"><?= e($p['excerpt'] ?? old('excerpt')) ?></textarea>
-                <p class="admin-help">Si lo dejas vacío, se usa el inicio del contenido.</p>
-            </div>
-        </div>
+        <!-- Extracto + SEO — plegado; ambos se autocompletan si los dejas vacíos -->
+        <details class="metabox metabox--fold" <?= $hasSeo ? 'open' : '' ?>>
+            <summary class="metabox__header metabox__header--summary">
+                <span class="flex items-center gap-2">
+                    <svg class="fold-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    <span class="metabox__title">Extracto y SEO</span>
+                </span>
+                <span class="text-[11px]" style="color: var(--ink-muted);">Opcional · se autocompletan</span>
+            </summary>
 
-        <!-- SEO metabox with Google preview -->
-        <div class="metabox">
-            <div class="metabox__header">
-                <span class="metabox__title">SEO</span>
-                <span class="text-[11px]" style="color: var(--ink-muted);">Cómo aparece en Google</span>
+            <div class="metabox__fold-inner">
+                <!-- Extracto -->
+                <div class="p-4 border-b border-stone-100">
+                    <label class="admin-label">Extracto</label>
+                    <textarea name="excerpt" rows="3" class="admin-textarea" maxlength="500" placeholder="Resumen del post para previews y SEO (opcional, máx 500 caracteres)"><?= e($p['excerpt'] ?? old('excerpt')) ?></textarea>
+                    <p class="admin-help">Si lo dejas vacío, se usa el inicio del contenido.</p>
+                </div>
+
+                <!-- SEO -->
+                <div class="p-4">
+                    <p class="text-[11px] mb-3" style="color: var(--ink-muted);">Cómo aparece en Google</p>
+                    <div class="seo-preview mb-4">
+                        <div class="seo-preview__url"><?= e(rtrim((string) env('APP_URL', ''), '/')) ?>/blog/<span id="seo-slug"><?= e($p['slug'] ?? 'auto-generado') ?></span></div>
+                        <div class="seo-preview__title" id="seo-title">Título del post</div>
+                        <div class="seo-preview__desc" id="seo-desc">El extracto o meta description aparecerá aquí.</div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="admin-label">Meta title <span class="font-normal" style="color: var(--ink-muted);">(deja vacío para usar el título)</span></label>
+                        <input type="text" name="meta_title" id="meta-title" value="<?= e($p['meta_title'] ?? '') ?>" class="admin-input" maxlength="60" placeholder="Máx 60 caracteres">
+                    </div>
+                    <div>
+                        <label class="admin-label">Meta description <span class="font-normal" style="color: var(--ink-muted);">(deja vacío para usar el extracto)</span></label>
+                        <textarea name="meta_description" id="meta-desc" rows="2" class="admin-textarea" maxlength="160" placeholder="Máx 160 caracteres"><?= e($p['meta_description'] ?? '') ?></textarea>
+                    </div>
+                </div>
             </div>
-            <div class="metabox__body space-y-4">
-                <div class="seo-preview">
-                    <div class="seo-preview__url"><?= e(rtrim((string) env('APP_URL', ''), '/')) ?>/blog/<span id="seo-slug"><?= e($p['slug'] ?? 'auto-generado') ?></span></div>
-                    <div class="seo-preview__title" id="seo-title">Título del post</div>
-                    <div class="seo-preview__desc" id="seo-desc">El extracto o meta description aparecerá aquí.</div>
-                </div>
-                <div>
-                    <label class="admin-label">Meta title <span class="font-normal" style="color: var(--ink-muted);">(deja vacío para usar el título)</span></label>
-                    <input type="text" name="meta_title" id="meta-title" value="<?= e($p['meta_title'] ?? '') ?>" class="admin-input" maxlength="60" placeholder="Máx 60 caracteres">
-                </div>
-                <div>
-                    <label class="admin-label">Meta description <span class="font-normal" style="color: var(--ink-muted);">(deja vacío para usar el extracto)</span></label>
-                    <textarea name="meta_description" id="meta-desc" rows="2" class="admin-textarea" maxlength="160" placeholder="Máx 160 caracteres"><?= e($p['meta_description'] ?? '') ?></textarea>
-                </div>
-            </div>
-        </div>
+        </details>
     </div>
 
     <!-- ── Right sidebar (WordPress-style metaboxes) ─────── -->
@@ -215,6 +227,13 @@
                 <input type="text" id="tags-input" class="admin-input" style="font-size: 13px;" placeholder="Escribe + Enter para agregar">
                 <input type="hidden" name="tags" id="tags-hidden" value="<?= e($p['tags'] ?? '') ?>">
                 <p class="admin-help">Presiona Enter o coma para agregar cada etiqueta.</p>
+                <?php if ($tagSuggest): ?>
+                    <div class="tag-suggest" data-tag-suggest>
+                        <?php foreach ($tagSuggest as $tag): ?>
+                            <button type="button" class="tag-suggest__chip" data-tag="<?= e($tag) ?>">+ <?= e($tag) ?></button>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -352,6 +371,9 @@
     const tagsInput = document.getElementById('tags-input');
     const tagsHidden = document.getElementById('tags-hidden');
     let tags = (tagsHidden.value || '').split(',').map(t => t.trim()).filter(Boolean);
+    // Assigned below once the suggestion chips exist; renderTags calls it so the
+    // chips' "added" state always tracks the real tag list.
+    let markSuggest = () => {};
     const renderTags = () => {
         tagsContainer.innerHTML = '';
         tags.forEach((tag, i) => {
@@ -361,6 +383,7 @@
             tagsContainer.appendChild(chip);
         });
         tagsHidden.value = tags.join(', ');
+        markSuggest();
     };
     tagsContainer.addEventListener('click', (e) => {
         if (e.target.classList.contains('tag-chip__remove')) {
@@ -378,6 +401,23 @@
             tags.pop(); renderTags();
         }
     });
+
+    /* ── Tag suggestions from previous posts ── */
+    const tagSuggestWrap = document.querySelector('[data-tag-suggest]');
+    if (tagSuggestWrap) {
+        const chips = [...tagSuggestWrap.querySelectorAll('[data-tag]')];
+        markSuggest = () => {
+            const have = tags.map(t => t.toLowerCase());
+            chips.forEach(c => c.classList.toggle('is-added', have.includes(c.dataset.tag.toLowerCase())));
+        };
+        chips.forEach(chip => chip.addEventListener('click', () => {
+            const tag = chip.dataset.tag;
+            const i = tags.findIndex(t => t.toLowerCase() === tag.toLowerCase());
+            if (i >= 0) tags.splice(i, 1); else tags.push(tag);   // toggle
+            renderTags();
+            tagsInput.focus();
+        }));
+    }
     renderTags();
 
     /* ── Cover preview ── */
@@ -394,38 +434,61 @@
         reader.readAsDataURL(file);
     };
 
-    /* ── Quill init + word count ── */
+    /* ── Editor (Quill) + word count ────────────────────────────
+       Quill comes from a CDN, so it can fail to load offline or if the CDN is
+       down. Guarded so a failure never takes down the rest of the form's JS
+       and never blanks the content on save: the hidden field is seeded with
+       the existing HTML, and if Quill is missing the editor div falls back to
+       a plain contenteditable that still submits. */
     const wordCount = document.getElementById('word-count');
     const readTime = document.getElementById('read-time');
     const readTimeInput = document.getElementById('reading-time-input');
-    const quill = new Quill('#quill-editor', {
-        theme: 'snow',
-        placeholder: 'Empieza a escribir tu post...',
-        modules: {
-            toolbar: [
-                [{ header: [1, 2, 3, false] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ list: 'ordered' }, { list: 'bullet' }],
-                [{ align: [] }],
-                ['blockquote', 'code-block'],
-                ['link', 'image'],
-                [{ color: [] }, { background: [] }],
-                ['clean']
-            ],
-        },
-    });
+    const hiddenContent = document.getElementById('quill-content');
+    const editorEl = document.getElementById('quill-editor');
+
+    hiddenContent.value = editorEl.innerHTML;   // preserve existing content no matter what
+    let quill = null;
+    try {
+        if (typeof Quill === 'undefined') throw new Error('Quill no se cargó (CDN).');
+        quill = new Quill('#quill-editor', {
+            theme: 'snow',
+            placeholder: 'Empieza a escribir tu post...',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    [{ align: [] }],
+                    ['blockquote', 'code-block'],
+                    ['link', 'image'],
+                    [{ color: [] }, { background: [] }],
+                    ['clean']
+                ],
+            },
+        });
+    } catch (err) {
+        // Fallback: a plain editable area. Not pretty, but the post is writable
+        // and saveable without the CDN.
+        console.warn('Editor enriquecido no disponible, usando texto plano:', err);
+        editorEl.setAttribute('contenteditable', 'true');
+        editorEl.style.cssText = 'display:block;min-height:360px;padding:18px 20px;outline:none;line-height:1.75;';
+    }
+
+    const readText = () => (quill ? quill.getText() : (editorEl.textContent || '')).trim();
     const updateStats = () => {
-        const text = quill.getText().trim();
+        const text = readText();
         const w = text ? text.split(/\s+/).length : 0;
         const m = Math.max(1, Math.ceil(w / 200));
         if (wordCount) wordCount.textContent = w;
         if (readTime) readTime.textContent = m;
         if (readTimeInput) readTimeInput.value = m;
     };
-    quill.on('text-change', updateStats);
+    if (quill) quill.on('text-change', updateStats);
+    else editorEl.addEventListener('input', updateStats);
     updateStats();
+
     document.getElementById('post-form').addEventListener('submit', () => {
-        document.getElementById('quill-content').value = quill.root.innerHTML;
+        hiddenContent.value = quill ? quill.root.innerHTML : editorEl.innerHTML;
     });
 
     /* ── AJAX: create category from modal ── */

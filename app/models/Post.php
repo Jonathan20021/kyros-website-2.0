@@ -133,6 +133,31 @@ class Post
         Database::pdo()->prepare("UPDATE posts SET views = views + 1 WHERE id = ?")->execute([$id]);
     }
 
+    /**
+     * Every tag ever used across posts, de-duplicated case-insensitively, for
+     * the suggestion chips. Tags live comma-separated in one column.
+     *
+     * @return array<int,string>
+     */
+    public static function distinctTags(int $limit = 24): array
+    {
+        $rows = Database::pdo()
+            ->query("SELECT tags FROM posts WHERE tags IS NOT NULL AND tags <> ''")
+            ->fetchAll(PDO::FETCH_COLUMN);
+
+        $seen = [];
+        foreach ($rows as $csv) {
+            foreach (explode(',', (string) $csv) as $tag) {
+                $tag = trim($tag);
+                if ($tag === '') continue;
+                $key = mb_strtolower($tag);
+                if (!isset($seen[$key])) $seen[$key] = $tag;   // keep first-seen casing
+            }
+        }
+        ksort($seen);
+        return array_slice(array_values($seen), 0, $limit);
+    }
+
     public static function count(string $status = ''): int
     {
         if ($status) {

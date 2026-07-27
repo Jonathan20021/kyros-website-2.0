@@ -20,8 +20,10 @@ class ProjectAdminController
     {
         auth_require();
         render_admin('projects.form', [
-            'project' => null,
-            'isEdit'  => false,
+            'project'    => null,
+            'isEdit'     => false,
+            'categories' => Project::distinctCategories(),
+            'tagSuggest' => Project::distinctTags(),
         ], [
             'adminTitle'    => 'Nuevo proyecto',
             'adminSubtitle' => 'Crea un nuevo caso de estudio',
@@ -58,8 +60,10 @@ class ProjectAdminController
         $project = Project::find((int) $id);
         if (!$project) { flash('error', 'No existe.'); redirect('/admin/projects'); }
         render_admin('projects.form', [
-            'project' => $project,
-            'isEdit'  => true,
+            'project'    => $project,
+            'isEdit'     => true,
+            'categories' => Project::distinctCategories(),
+            'tagSuggest' => Project::distinctTags(),
         ], [
             'adminTitle'    => 'Editar: ' . $project['title'],
             'adminSubtitle' => 'Actualiza información, imagen y estado',
